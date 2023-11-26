@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: 1
+  element_type: 1
+  event_points: 1
+  first_name: MyString
+  fpl_id: 1
+  photo: MyString
+  second_name: MyString
+  selected_by_percent: 1.5
+  team: 1
+  total_points: 1
+  web_name: MyString
+
+two:
+  code: 1
+  element_type: 1
+  event_points: 1
+  first_name: MyString
+  fpl_id: 1
+  photo: MyString
+  second_name: MyString
+  selected_by_percent: 1.5
+  team: 1
+  total_points: 1
+  web_name: MyString

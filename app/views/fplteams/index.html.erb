@@ -1,0 +1,7 @@
+<h1>Teams</h1>
+
+<ul>
+<% @managers.each do |manager| %>
+<li><%= link_to "#{manager.entry_name}, #{manager.player_name}", fplteam_path(manager) %></li>
+<% end %>
+</ul>

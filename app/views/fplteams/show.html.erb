@@ -1,0 +1,16 @@
+<h1><%= @manager.entry_name %></h1>
+<h3><%= @manager.player_name %></h3>
+
+<%# <ul>
+<% @players.each do |player| %>
+  <%# <li><%= player[0].web_name, <%= player[0].selected_by_percent</li> %>
+<%# <% end %>
+<%# </ul> %>
+
+
+<ul>
+<% @manager.picks.each do |pick| %>
+  <% player = Player.find(pick.player_id) %>
+  <li><%= player.web_name%>, <%= player.selected_by_percent %></li>
+<% end %>
+</ul>

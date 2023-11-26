@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  points_deducted: 1
+  fplteam: one
+  player: one
+
+two:
+  points_deducted: 1
+  fplteam: two
+  player: two

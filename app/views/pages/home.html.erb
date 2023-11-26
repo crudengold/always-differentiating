@@ -1,0 +1,35 @@
+<h1>Illegal players</h1>
+
+<h2>Illegal to own:</h2>
+<ul>
+  <% @illegal_players.each do |player| %>
+    <% if player.selected_by_percent >= 15 %>
+      <li><%= player.web_name %>, <%= player.selected_by_percent %></li>
+      <% if player.fplteams.empty? == false %>
+        <% player.fplteams.each do |manager| %>
+        <ul>
+          <li style="color: red"><%= manager.entry_name %></li>
+        </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
+
+<h2>Illegal to buy</h2>
+<ul>
+  <% @illegal_players.each do |player| %>
+    <% if player.selected_by_percent >= 10 && player.selected_by_percent < 15 %>
+      <li><%= player.web_name %>, <%= player.selected_by_percent %></li>
+      <% if player.fplteams.empty? == false %>
+        <% player.fplteams.each do |manager| %>
+        <ul>
+          <li style="color: orange"><%= manager.entry_name %></li>
+        </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
+
+<p><%= link_to "Go to teams", fplteams_path %></p>
