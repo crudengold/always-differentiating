@@ -1,35 +1,91 @@
-<h1>Illegal players</h1>
+<div class="tabs">
+  <ul class="list-inline tabs-underlined justify-content-center">
+  <li>
+    <a href="#" class="tab-underlined active">Bookings</a>
+  </li>
+  <li>
+    <a href="#" class="tab-underlined">Requests</a>
+  </li>
+  <li>
+    <a href="#" class="tab-underlined">Conversations</a>
+  </li>
+</ul>
+</div>
 
-<h2>Illegal to own:</h2>
-<ul>
-  <% @illegal_players.each do |player| %>
-    <% if player.selected_by_percent >= 15 %>
-      <li><%= player.web_name %>, <%= player.selected_by_percent %></li>
-      <% if player.fplteams.empty? == false %>
-        <% player.fplteams.each do |manager| %>
-        <ul>
-          <li style="color: red"><%= manager.entry_name %></li>
-        </ul>
+<div class="main-box">
+  <h1 style="text-align: center"><strong>Illegal players</strong></h1>
+  <div>
+    <h2 style="text-align: center">Illegal to own:</h2>
+      <h3>GKs</h3>
+      <div class="players row">
+      <% @illegal_players.each do |player| %>
+        <% if player.element_type == 1 %>
+          <% if player.selected_by_percent >= 15 %>
+          <div class="player" style="align: center">
+            <h6><strong><%= player.web_name %></strong></h6>
+            <p><%= player.selected_by_percent %>%</p>
+          </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      </div>
+      <h3>Defs</h3>
+      <div class="players row">
+      <% @illegal_players.each do |player| %>
+        <% if player.element_type == 2 %>
+          <% if player.selected_by_percent >= 15 %>
+          <div class="player">
+            <h6><strong><%= player.web_name %></strong></h6>
+            <p><%= player.selected_by_percent %>%</p>
+          </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      </div>
+      <h3>Mids</h3>
+      <div class="players row">
+      <% @illegal_players.each do |player| %>
+        <% if player.element_type == 3 %>
+          <% if player.selected_by_percent >= 15 %>
+          <div class="player">
+            <h6><strong><%= player.web_name %></strong></h6>
+            <p><%= player.selected_by_percent %>%</p>
+          </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      </div>
+      <h3>Fwds</h3>
+      <div class="players row">
+      <% @illegal_players.each do |player| %>
+        <% if player.element_type == 1 %>
+          <% if player.selected_by_percent >= 15 %>
+          <div class="player">
+            <h6><strong><%= player.web_name %></strong></h6>
+            <p><%= player.selected_by_percent %>%</p>
+          </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      </div>
+  </div>
+
+  <h2>Illegal to buy</h2>
+  <ul>
+    <% @illegal_players.each do |player| %>
+      <% if player.selected_by_percent >= 10 && player.selected_by_percent < 15 %>
+        <li><%= player.web_name %>, <%= player.selected_by_percent %></li>
+        <% if player.fplteams.empty? == false %>
+          <% player.fplteams.each do |manager| %>
+          <ul>
+            <li style="color: orange"><%= manager.entry_name %></li>
+          </ul>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
 
-<h2>Illegal to buy</h2>
-<ul>
-  <% @illegal_players.each do |player| %>
-    <% if player.selected_by_percent >= 10 && player.selected_by_percent < 15 %>
-      <li><%= player.web_name %>, <%= player.selected_by_percent %></li>
-      <% if player.fplteams.empty? == false %>
-        <% player.fplteams.each do |manager| %>
-        <ul>
-          <li style="color: orange"><%= manager.entry_name %></li>
-        </ul>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-</ul>
+  <p><%= link_to "Go to teams", fplteams_path %></p>
 
-<p><%= link_to "Go to teams", fplteams_path %></p>
+</div>

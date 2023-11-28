@@ -24,4 +24,8 @@ class PagesController < ApplicationController
       return "fwd"
     end
   end
+
+  def get_shirts()
+
+  end
 end

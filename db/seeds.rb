@@ -12,23 +12,23 @@ general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
 league_url = "https://fantasy.premierleague.com/api/leagues-classic/856460/standings/"
 
 
-Pick.destroy_all
+# Pick.destroy_all
 
-Fplteam.all.each do |manager|
-  url = "https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/12/picks/"
-  user_serialized = URI.open(url).read
-  all_data = JSON.parse(user_serialized)
-  puts "API accessed and loaded"
-  all_data["picks"].each do |player|
-    player_log = Player.where(fpl_id: player["element"])
-    puts player_log[0].web_name
-    pick = Pick.new
-    pick.player_id = player_log[0].id
-    pick.fplteam_id = manager.id
-    pick.save
-    puts "created!"
-  end
-end
+# Fplteam.all.each do |manager|
+#   url = "https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/12/picks/"
+#   user_serialized = URI.open(url).read
+#   all_data = JSON.parse(user_serialized)
+#   puts "API accessed and loaded"
+#   all_data["picks"].each do |player|
+#     player_log = Player.where(fpl_id: player["element"])
+#     puts player_log[0].web_name
+#     pick = Pick.new
+#     pick.player_id = player_log[0].id
+#     pick.fplteam_id = manager.id
+#     pick.save
+#     puts "created!"
+#   end
+# end
 
 
 # all_data["elements"].each do |player|
@@ -62,3 +62,13 @@ end
 #   new_manager.save
 #   puts "Saved #{new_manager.entry_name} (#{new_manager.player_name})"
 # end
+
+
+user_serialized = URI.open(general_url).read
+all_data = JSON.parse(user_serialized)
+
+all_data["elements"].each do |player|
+  player_data = Player.where(fpl_id: player["id"])
+  player_data.shirt = player["team_code"]
+  p "shirt added for #{player["web_name"]}"
+end

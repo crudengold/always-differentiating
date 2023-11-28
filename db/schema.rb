@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_25_174146) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_28_215458) do
   create_table "fplteams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_25_174146) do
     t.string "web_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "shirt"
   end
 
   create_table "selected_by_stats", force: :cascade do |t|
