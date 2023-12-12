@@ -6,6 +6,7 @@ require "time"
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: :home
+
   def home
     general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
     user_serialized = URI.open(general_url).read
@@ -16,6 +17,7 @@ class PagesController < ApplicationController
         @gameweek = num["id"]
       end
     end
+    @update_time = SelectedByStat.last.created_at
     @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
   end
 
