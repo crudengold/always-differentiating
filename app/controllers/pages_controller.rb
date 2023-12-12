@@ -5,8 +5,18 @@ require "time"
 
 
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: :home
   def home
-    @illegal_players = Player.where("selected_by_percent > ?", 10).order(selected_by_percent: :desc)
+    general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
+    user_serialized = URI.open(general_url).read
+    all_data = JSON.parse(user_serialized)
+    # get the current gameweek
+    all_data["events"].each do |num|
+      if num["is_next"] == true
+        @gameweek = num["id"]
+      end
+    end
+    @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
   end
 
   def new

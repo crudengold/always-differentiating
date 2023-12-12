@@ -69,6 +69,9 @@ all_data = JSON.parse(user_serialized)
 
 all_data["elements"].each do |player|
   player_data = Player.where(fpl_id: player["id"])
-  player_data.shirt = player["team_code"]
-  p "shirt added for #{player["web_name"]}"
+  puts player_data[0].id
+  # puts player_data[0].shirt
+  # player_data.shirt = player["team_code"]
+  # player_date.save!
+  # p "shirt added for #{player["web_name"]}"
 end
