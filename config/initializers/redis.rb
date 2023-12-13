@@ -10,4 +10,5 @@ if url
   Sidekiq.configure_client do |config|
     config.redis = { url: url }
   end
+  $redis = Redis.new(:url => url)
 end
