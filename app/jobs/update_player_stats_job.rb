@@ -31,6 +31,7 @@ class UpdatePlayerStatsJob < ApplicationJob
           new_player.second_name = player["second_name"]
           new_player.team = player["team"]
           new_player.total_points = player["total_points"]
+          new_player.shirt = player["team_code"]
           new_player.save
           puts "#{new_player.web_name} added\n"
           SelectedByStat.create!(

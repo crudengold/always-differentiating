@@ -38,6 +38,12 @@
   border-radius: 5px;
 }
 
+@media (max-width: 576px) {
+  .main-box {
+    max-width: 100%;
+  }
+}
+
 .players {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
