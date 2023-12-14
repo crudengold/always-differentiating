@@ -16,6 +16,8 @@ Pick.destroy_all
 user_serialized = URI.open(general_url).read
 all_data = JSON.parse(user_serialized)
 
+gameweek = 0
+
 all_data["events"].each do |num|
   if num["is_current"] == true
     gameweek = num["id"]
@@ -26,19 +28,19 @@ user_serialized = URI.open(league_url).read
 all_data = JSON.parse(user_serialized)
 
 
-all_data["standings"]["results"].each do |manager|
-  new_manager = Fplteam.new
-  new_manager.event_total = manager["event_total"]
-  new_manager.player_name = manager["player_name"]
-  new_manager.rank = manager["rank"]
-  new_manager.last_rank = manager["last_rank"]
-  new_manager.rank_sort = manager["rank_sort"]
-  new_manager.total = manager["total"]
-  new_manager.entry = manager["entry"]
-  new_manager.entry_name = manager["entry_name"]
-  new_manager.save
-  puts "Saved #{new_manager.entry_name} (#{new_manager.player_name})"
-end
+# all_data["standings"]["results"].each do |manager|
+#   new_manager = Fplteam.new
+#   new_manager.event_total = manager["event_total"]
+#   new_manager.player_name = manager["player_name"]
+#   new_manager.rank = manager["rank"]
+#   new_manager.last_rank = manager["last_rank"]
+#   new_manager.rank_sort = manager["rank_sort"]
+#   new_manager.total = manager["total"]
+#   new_manager.entry = manager["entry"]
+#   new_manager.entry_name = manager["entry_name"]
+#   new_manager.save
+#   puts "Saved #{new_manager.entry_name} (#{new_manager.player_name})"
+# end
 
 Fplteam.all.each do |manager|
   url = "https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/12/picks/"
