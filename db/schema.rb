@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_13_220252) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_14_134638) do
   create_table "fplteams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_13_220252) do
     t.integer "fplteam_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gameweek"
     t.index ["fplteam_id"], name: "index_picks_on_fplteam_id"
     t.index ["player_id"], name: "index_picks_on_player_id"
   end
