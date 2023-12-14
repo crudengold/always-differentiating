@@ -12,9 +12,19 @@ general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
 league_url = "https://fantasy.premierleague.com/api/leagues-classic/856460/standings/"
 
 
-# Pick.destroy_all
+Pick.destroy_all
+user_serialized = URI.open(general_url).read
+all_data = JSON.parse(user_serialized)
+
+all_data["events"].each do |num|
+  if num["is_current"] == true
+    gameweek = num["id"]
+  end
+end
+
 user_serialized = URI.open(league_url).read
 all_data = JSON.parse(user_serialized)
+
 
 all_data["standings"]["results"].each do |manager|
   new_manager = Fplteam.new
@@ -41,6 +51,7 @@ Fplteam.all.each do |manager|
     pick = Pick.new
     pick.player_id = player_log[0].id
     pick.fplteam_id = manager.id
+    pick.gameweek = gameweek
     pick.save
     puts "created!"
   end
