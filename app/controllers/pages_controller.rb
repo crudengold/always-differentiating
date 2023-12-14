@@ -19,6 +19,8 @@ class PagesController < ApplicationController
     end
     @update_time = SelectedByStat.last.created_at
     @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
+    @penalties = Penalty.where("gameweek = ?", @gameweek)
+    @penalty_players = Penalty.distinct.pluck(:player_id)
   end
 
   def new

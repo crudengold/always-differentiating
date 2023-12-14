@@ -22,8 +22,9 @@
 
 .banner {
   width: 100%;
+  min-width: auto;
   text-align: center;
-  background: #537A5A;
+  background: #254D32;
   font-family: 'Poppins', sans-serif;
   color: white;
   padding-top: 30px;
@@ -83,4 +84,13 @@ h3 {
 .tabs-underlined .tab-underlined.active {
   opacity: 1;
   border-bottom: 3px solid #555555;
+}
+
+.penalty-card {
+  border-radius: 5px;
+  box-shadow: 2px 2px grey;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #F3DF60;
 }
