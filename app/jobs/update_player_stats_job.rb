@@ -55,5 +55,6 @@ class UpdatePlayerStatsJob < ApplicationJob
     else
       print "Stats already logged for Gameweek #{gameweek}"
     end
+    GetPendingPenaltiesJob.set(wait: 1.minute).perform_later
   end
 end
