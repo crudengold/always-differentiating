@@ -9,14 +9,21 @@ class GetCurrentPicksJob < ApplicationJob
     all_data = JSON.parse(user_serialized)
     # get the current gameweek
     gameweek = 0
+    next_deadline = ""
     all_data["events"].each do |num|
       if num["is_current"] == true
         gameweek = num["id"]
       end
     end
+    all_data["events"].each do |num|
+      if num["is_next"] == true
+        next_deadline = num["deadline_time"]
+      end
+    end
+
     # go through every fplteam
     Fplteam.all.each do |manager|
-      manager_url = "https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/12/picks/"
+      manager_url = "https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/#{gameweek}/picks/"
       user_serialized = URI.open(manager_url).read
       all_data = JSON.parse(user_serialized)
       puts "API accessed and loaded"
