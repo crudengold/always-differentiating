@@ -12,6 +12,7 @@ class UpdatePlayerStatsJob < ApplicationJob
     all_data["events"].each do |num|
       if num["is_next"] == true
         gameweek = num["id"]
+        deadline = num["deadline_time"]
       end
     end
     if SelectedByStat.last.gameweek != gameweek
@@ -55,6 +56,8 @@ class UpdatePlayerStatsJob < ApplicationJob
     else
       print "Stats already logged for Gameweek #{gameweek}"
     end
+    after_deadline = Time.zone.parse(deadline).utc + 90.minutes
     GetPendingPenaltiesJob.set(wait: 1.minute).perform_later
+    GetCurrentPicksJob.set(wait_until: after_deadline).perform_later
   end
 end
