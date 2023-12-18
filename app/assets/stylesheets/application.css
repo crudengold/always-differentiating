@@ -54,10 +54,6 @@
   margin: 10px;
 }
 
-.player {
-  grid-template-columns: 1fr;
-}
-
 h3 {
   text-align: center;
   margin-top: 10px;
