@@ -11,7 +11,7 @@
   </li>
 </ul>
 </div> %>
-
+<% unless @illegal_players.empty? %>
   <div class="row" style="width: 100%">
     <div class="column col-xs-12 col-sm-10" style="text-align: center; width: 95%">
       <div class="main-box">
@@ -152,7 +152,7 @@
           </div>
         </div>
     </div>
-
+<% end %>
 <div class="column" style="text-align: center">
   <% if @penalties.empty? && !@illegal_players.empty?%>
     <div id="no-warnings">
@@ -179,9 +179,9 @@
   <% end %>
   <div>
     <% if @illegal_players.empty? %>
-      <h3>Screenshot for Gameweek <%= @gameweek %> in:</h3>
+      <h4>Screenshot for Gameweek <%= @gameweek %> in:</h4>
     <% else %>
-      <h3>Screenshot for Gameweek <%= @gameweek + 1 %> in:</h3>
+      <h4>Screenshot for Gameweek <%= @gameweek + 1 %> in:</h4>
     <% end %>
   </div>
   <div id="countdown">
