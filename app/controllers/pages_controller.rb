@@ -15,11 +15,14 @@ class PagesController < ApplicationController
     all_data["events"].each do |num|
       if num["is_next"] == true
         @gameweek = num["id"]
+        @deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
     @gameweek = 17
+    @deadline_minus_one = @deadline - 24.hours
     @update_time = SelectedByStat.last.created_at
     @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
+    @illegal_players.empty?
     @penalties = Penalty.where("gameweek = ?", @gameweek)
     @penalty_players = Penalty.distinct.pluck(:player_id)
   end
