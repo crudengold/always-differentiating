@@ -12,149 +12,159 @@
 </ul>
 </div> %>
 
-<div class="column" style="text-align: center">
-  <div>
-    <h4>Numbers for Gameweek <%= @gameweek %></h4>
-    <h6>Updated at <%= @update_time %></h6>
+<div class="row" style="width: 100%">
+  <div class="column col-xs-12 col-sm-10" style="text-align: center">
+    <div>
+      <h4>Numbers for Gameweek <%= @gameweek %></h4>
+      <h6>Updated at <%= @update_time %></h6>
+    </div>
+      <div class="main-box">
+
+        <h1 style="text-align: center"><strong>Illegal players</strong></h1>
+        <h2 style="text-align: center">Illegal to own:</h2>
+        <div class="illegal-own row">
+          <div class="players column col-xs-6 col-sm-3" style="margin: 5px">
+            <h4><strong>GKs</strong></h4>
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 1 %>
+                <% if stat.selected_by >= 15 %>
+                <div class="player d-flex row">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}_1-110.webp" %>" alt="" style="width: 20%; height: 20%; padding-right: 0px" class="col-md-3">
+                  <div class="stat column col-8" style="text-align: left; padding-right: 0px;">
+                    <p style="font-size: small; margin-bottom: 0px"><strong><%= stat.player.web_name %></strong>, <%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="players column col-xs-6 col-sm-3" style="margin: 5px">
+            <h4><strong>Defs</strong></h4>
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 2 %>
+                <% if stat.selected_by >= 15 %>
+                <div class="player d-flex row">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 20%; height: 20%; padding-right: 0px" class="col-md-3">
+                  <div class="stat column col-8" style="text-align: left; padding-right: 0px">
+                    <p style="font-size: small; margin-bottom: 0px"><strong><%= stat.player.web_name %></strong>, <%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="players column col-xs-6 col-sm-3" style="margin: 5px">
+            <h4><strong>Mids</strong></h4>
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 3 %>
+                <% if stat.selected_by >= 15 %>
+                <div class="player d-flex row">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 20%; height: 20%; padding-right: 0px" class="col-md-3">
+                  <div class="stat column col-8" style="text-align: left; padding-right: 0px">
+                    <p style="font-size: small; margin-bottom: 0px"><strong><%= stat.player.web_name %></strong>, <%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="players column col-xs-6 col-sm-3" style="margin: 5px">
+            <h4><strong>Fwds</strong></h4>
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 4 %>
+                <% if stat.selected_by >= 15 %>
+                <div class="player d-flex row">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 20%; height: 20%; padding-right: 0px" class="col-md-3">
+                  <div class="stat column col-8" style="text-align: left; padding-right: 0px">
+                    <p style="font-size: small; margin-bottom: 0px"><strong><%= stat.player.web_name %></strong>, <%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div>
+          <h2 style="text-align: center">Illegal to buy:</h2>
+            <h3>GKs</h3>
+            <div class="players row">
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 1 %>
+                <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
+                <div class="player col-sm-6 col-md-3">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
+                  <div class="stat" style="align: center">
+                    <h6><strong><%= stat.player.web_name %></strong></h6>
+                    <p><%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+            <h3>Defs</h3>
+            <div class="players row">
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 2 %>
+                <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
+                <div class="player col-sm-6 col-md-3">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
+                  <div class="stat" style="align: center">
+                    <h6><strong><%= stat.player.web_name %></strong></h6>
+                    <p><%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+            <h3>Mids</h3>
+            <div class="players row">
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 3 %>
+                <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
+                <div class="player col-sm-6 col-md-3">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
+                  <div class="stat" style="align: center">
+                    <h6><strong><%= stat.player.web_name %></strong></h6>
+                    <p><%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+            <h3>Fwds</h3>
+            <div class="players row">
+            <% @illegal_players.each do |stat| %>
+              <% if stat.player.element_type == 4 %>
+                <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
+                <div class="player col-sm-5 col-md-3">
+                  <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
+                  <div class="stat" style="align: center">
+                    <h6><strong><%= stat.player.web_name %></strong></h6>
+                    <p><%= stat.selected_by %>%</p>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+        </div>
+      </div>
   </div>
-
-  <div class="main-box col-xs-12 col-sm-12">
-
-    <h1 style="text-align: center"><strong>Illegal players</strong></h1>
-    <div>
-      <h2 style="text-align: center">Illegal to own:</h2>
-        <h3>GKs</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 1 %>
-            <% if stat.selected_by >= 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
+  <div class="col-sm-4">
+    <h2><strong>Warnings:</strong></h2>
+    <h5>The following must be transferred out by the deadline:</h5>
+    <% @penalty_players.each do |player_id| %>
+      <div class="penalty-card">
+        <h5><strong><%= Player.find(player_id).web_name %> (<%= SelectedByStat.find_by(player_id: player_id, gameweek: @gameweek).selected_by %>%)</strong></h5>
+        <% @penalties.each do |penalty| %>
+          <% if penalty.player_id == player_id %>
+            <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
           <% end %>
         <% end %>
-        </div>
-        <h3>Defs</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 2 %>
-            <% if stat.selected_by >= 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-        <h3>Mids</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 3 %>
-            <% if stat.selected_by >= 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-        <h3>Fwds</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 4 %>
-            <% if stat.selected_by >= 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-    </div>
-    <div>
-      <h2 style="text-align: center">Illegal to buy:</h2>
-        <h3>GKs</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 1 %>
-            <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-        <h3>Defs</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 2 %>
-            <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-        <h3>Mids</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 3 %>
-            <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-        <h3>Fwds</h3>
-        <div class="players row">
-        <% @illegal_players.each do |stat| %>
-          <% if stat.player.element_type == 4 %>
-            <% if stat.selected_by >= 10 && stat.selected_by < 15 %>
-            <div class="player">
-              <img src="<%= "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_#{stat.player.shirt}-110.webp" %>" alt="" style="width: 30%">
-              <div class="stat" style="align: center">
-                <h6><strong><%= stat.player.web_name %></strong></h6>
-                <p><%= stat.selected_by %>%</p>
-              </div>
-            </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        </div>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
-<%# <p><%= link_to "Go to teams", fplteams_path</p> %>

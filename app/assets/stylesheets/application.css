@@ -21,8 +21,10 @@
 }
 
 .banner {
+  width: 100%;
+  min-width: auto;
   text-align: center;
-  background: #537A5A;
+  background: #254D32;
   font-family: 'Poppins', sans-serif;
   color: white;
   padding-top: 30px;
@@ -32,7 +34,7 @@
 
 
 .main-box {
-  background: #9AE19D;
+  background: #69B578;
   padding: 20px;
   box-shadow: 2px 2px grey;
   border-radius: 5px;
@@ -45,17 +47,11 @@
 }
 
 .players {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 16px;
+
   background-color: white;
   border-radius: 5px;
   padding: 5px;
   margin: 10px;
-}
-
-.player {
-  grid-template-columns: 1fr;
 }
 
 h3 {
@@ -82,4 +78,13 @@ h3 {
 .tabs-underlined .tab-underlined.active {
   opacity: 1;
   border-bottom: 3px solid #555555;
+}
+
+.penalty-card {
+  border-radius: 5px;
+  box-shadow: 2px 2px grey;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #F3DF60;
 }
