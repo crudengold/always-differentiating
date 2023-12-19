@@ -12,19 +12,18 @@
 </ul>
 </div> %>
 
-<% unless @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column col-xs-12 col-sm-10" style="text-align: center">
-      <div>
-        <h4>Numbers for Gameweek <%= @gameweek %></h4>
-        <h6>Updated at <%= @update_time %></h6>
-      </div>
-        <div class="main-box">
+    <div class="column col-xs-12 col-sm-10" style="text-align: center; width: 95%">
+      <div class="main-box">
+        <h1 style="text-align: center"><strong>Illegal players</strong></h1>
+        <div>
+          <h4>Numbers for Gameweek <%= @gameweek %></h4>
+          <h6>Updated at <%= @update_time %></h6>
+        </div>
 
-          <h1 style="text-align: center"><strong>Illegal players</strong></h1>
           <h2 style="text-align: center">Illegal to own:</h2>
           <div class="illegal-own row">
-            <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+            <div class="players column col-xs-6 col-sm-3 m-0">
               <h4><strong>GKs</strong></h4>
               <% @illegal_players.each do |stat| %>
                 <% if stat.player.element_type == 1 %>
@@ -39,7 +38,7 @@
                 <% end %>
               <% end %>
             </div>
-            <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+            <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
               <h4><strong>Defs</strong></h4>
               <% @illegal_players.each do |stat| %>
                 <% if stat.player.element_type == 2 %>
@@ -54,7 +53,7 @@
                 <% end %>
               <% end %>
             </div>
-            <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+            <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
               <h4><strong>Mids</strong></h4>
               <% @illegal_players.each do |stat| %>
                 <% if stat.player.element_type == 3 %>
@@ -69,7 +68,7 @@
                 <% end %>
               <% end %>
             </div>
-            <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+            <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
               <h4><strong>Fwds</strong></h4>
               <% @illegal_players.each do |stat| %>
                 <% if stat.player.element_type == 4 %>
@@ -86,9 +85,9 @@
             </div>
           </div>
           <div>
-            <h2 style="text-align: center">Illegal to buy:</h2>
+            <h2 style="text-align: center; margin-top: 20px">Illegal to buy:</h2>
               <div class="illegal-own row">
-                <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+                <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
                   <h4><strong>GKs</strong></h4>
                   <% @illegal_players.each do |stat| %>
                     <% if stat.player.element_type == 1 %>
@@ -103,7 +102,7 @@
                     <% end %>
                   <% end %>
                 </div>
-                <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+                <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
                   <h4><strong>Defs</strong></h4>
                   <% @illegal_players.each do |stat| %>
                     <% if stat.player.element_type == 2 %>
@@ -118,7 +117,7 @@
                     <% end %>
                   <% end %>
                 </div>
-                <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+                <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
                   <h4><strong>Mids</strong></h4>
                   <% @illegal_players.each do |stat| %>
                     <% if stat.player.element_type == 3 %>
@@ -133,7 +132,7 @@
                     <% end %>
                   <% end %>
                 </div>
-                <div class="players column col-xs-6 col-sm-2" style="margin: 5px">
+                <div class="players column col-xs-6 col-sm-3 m-0" style="margin: 5px">
                   <h4><strong>Fwds</strong></h4>
                   <% @illegal_players.each do |stat| %>
                     <% if stat.player.element_type == 4 %>
@@ -153,26 +152,37 @@
           </div>
         </div>
     </div>
-    <div class="col-sm-4">
-      <h2><strong>Warnings:</strong></h2>
-      <h5>The following must be transferred out by the deadline:</h5>
-      <% @penalty_players.each do |player_id| %>
-        <div class="penalty-card">
-          <h5><strong><%= Player.find(player_id).web_name %> (<%= SelectedByStat.find_by(player_id: player_id, gameweek: @gameweek).selected_by %>%)</strong></h5>
-          <% @penalties.each do |penalty| %>
-            <% if penalty.player_id == player_id %>
-              <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-<% end %>
 
 <div class="column" style="text-align: center">
+  <% if @penalties.empty? %>
+    <div id="no-warnings">
+      <h2><strong>No transfers needed in gameweek <%= @gameweek %></strong></h2>
+      <h5>Nobody owns any players over 15% owned</h5>
+    </div>
+  <% end %>
+  <% unless @penalties.empty? %>
+      <div class="col-xs-2 col-sm-4 m-2">
+        <h2><strong>Warnings:</strong></h2>
+        <h5>The following must be transferred out by the deadline:</h5>
+        <% @penalty_players.each do |player_id| %>
+          <div class="penalty-card">
+            <h5><strong><%= Player.find(player_id).web_name %> (<%= SelectedByStat.find_by(player_id: player_id, gameweek: @gameweek).selected_by %>%)</strong></h5>
+            <% @penalties.each do |penalty| %>
+              <% if penalty.player_id == player_id %>
+                <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   <div>
-    <h3>Screenshot for Gameweek <%= @gameweek %> in:</h3>
+    <% if @illegal_players.empty? %>
+      <h3>Screenshot for Gameweek <%= @gameweek %> in:</h3>
+    <% else %>
+      <h3>Screenshot for Gameweek <%= @gameweek + 1 %> in:</h3>
+    <% end %>
   </div>
   <div id="countdown">
     <script>
