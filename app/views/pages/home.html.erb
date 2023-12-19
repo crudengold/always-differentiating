@@ -154,7 +154,7 @@
     </div>
 
 <div class="column" style="text-align: center">
-  <% if @penalties.empty? %>
+  <% if @penalties.empty? && !@illegal_players.empty?%>
     <div id="no-warnings">
       <h2><strong>No transfers needed in gameweek <%= @gameweek %></strong></h2>
       <h5>Nobody owns any players over 15% owned</h5>
