@@ -33,7 +33,6 @@ class GetCurrentPicksJob < ApplicationJob
         all_data = JSON.parse(user_serialized)
         puts "API accessed and loaded"
         # get their picks
-        raise
         all_data["picks"].each do |player|
           player_log = Player.find_by(fpl_id: player["element"])
           # create a new pick for each player
