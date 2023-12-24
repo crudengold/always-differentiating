@@ -25,6 +25,10 @@ class PagesController < ApplicationController
     @penalty_players = Penalty.distinct.pluck(:player_id)
   end
 
+  def test
+    GetCurrentPicksJob.perform_now
+  end
+
   def new
   end
 

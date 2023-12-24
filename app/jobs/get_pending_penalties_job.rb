@@ -10,26 +10,26 @@ class GetPendingPenaltiesJob < ApplicationJob
     # get the current gameweek
     gameweek = 0
     all_data["events"].each do |num|
-      if num["is_current"] == true
+      if num["is_next"] == true
         gameweek = num["id"]
       end
     end
     #get all illegal players
-    illegal_players = SelectedByStat.where("selected_by > 15 AND gameweek = ?", gameweek + 1)
+    illegal_players = SelectedByStat.where("selected_by > 15 AND gameweek = ?", gameweek)
 
-    illegal_players.each do |player|
+    illegal_players.each do |stat|
       #find picks where player is selected, and skip if there are none
-      unless Pick.find_by(player: player.player).nil?
+      unless Pick.find_by(player: stat.player, gameweek: gameweek - 1).nil?
         #create pending penalty for each pick's manager
-        Pick.where(player: player.player).each do |pick|
+        Pick.where(player: stat.player, gameweek: gameweek - 1).each do |pick|
           warning = Penalty.new
-          warning.player = player.player
+          warning.player = stat.player
           warning.fplteam = pick.fplteam
+          warning.gameweek = gameweek
           warning.save
           puts "Penalty created for #{warning.fplteam.player_name}, #{warning.player.web_name}"
         end
       end
     end
-    # create pending penalty for each pick's manager
   end
 end
