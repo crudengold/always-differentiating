@@ -1,3 +1,5 @@
+require "open-uri"
+
 class GetPendingPenaltiesJob < ApplicationJob
   queue_as :default
 
