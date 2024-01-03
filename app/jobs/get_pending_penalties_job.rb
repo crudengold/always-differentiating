@@ -20,9 +20,9 @@ class GetPendingPenaltiesJob < ApplicationJob
     illegal_players = SelectedByStat.where("selected_by > 15 AND gameweek = ?", gameweek)
 
     illegal_players.each do |stat|
-      #find picks where player is selected, and skip if there are none
+      # find picks where player is selected, and skip if there are none
       unless Pick.find_by(player: stat.player, gameweek: gameweek - 1).nil?
-        #create pending penalty for each pick's manager
+        # create pending penalty for each pick's manager
         Pick.where(player: stat.player, gameweek: gameweek - 1).each do |pick|
           warning = Penalty.new
           warning.player = stat.player

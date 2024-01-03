@@ -4,6 +4,7 @@ class FplteamsController < ApplicationController
   end
 
   def show
+    @gameweek = 19
     @manager = Fplteam.find(params[:id])
   end
 end
