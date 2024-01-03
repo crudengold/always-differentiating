@@ -1,16 +1,3 @@
-<%# <div class="tabs">
-  <ul class="list-inline tabs-underlined justify-content-center">
-  <li>
-    <a href="#" class="tab-underlined active">Bookings</a>
-  </li>
-  <li>
-    <a href="#" class="tab-underlined">Requests</a>
-  </li>
-  <li>
-    <a href="#" class="tab-underlined">Conversations</a>
-  </li>
-</ul>
-</div> %>
 <% unless @illegal_players.empty? %>
   <div class="row" style="width: 100%">
     <div class="column col-xs-12 col-sm-10" style="text-align: center; width: 95%">
@@ -152,6 +139,8 @@
           </div>
         </div>
 <% end %>
+
+<%# Penalties to be refactored into partial %>
 <div class="column" style="text-align: center">
   <% if @penalties.empty? && !@illegal_players.empty?%>
     <div id="no-warnings">
@@ -177,6 +166,8 @@
     </div>
     </div>
   <% end %>
+
+  <%# Not sure what to do with this, needs reworking %>
   <div>
     <% if @illegal_players.empty? %>
       <h4>Screenshot for Gameweek <%= @gameweek %> in:</h4>
@@ -184,31 +175,14 @@
       <h4>Screenshot for Gameweek <%= @gameweek + 1 %> in:</h4>
     <% end %>
   </div>
-  <div id="countdown">
-    <script>
-      var targetDate = new Date("<%= @deadline_minus_one %>");
-      var countdownElement = document.getElementById("countdown");
 
-      function updateCountdown() {
-        var currentDate = new Date();
-        var timeDifference = targetDate - currentDate;
 
-        if (timeDifference > 0) {
-          var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-          countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-        } else {
-          countdownElement.innerHTML = "Countdown expired";
-        }
-      }
-
-      setInterval(updateCountdown, 1000);
-    </script>
+<div class="row w-100">
+  <div class="column col-8 m-0 p-0" id="illegal players">
+    <h1>illegal players</h1>
   </div>
-  <div>
-    <h5>(FPL Deadline: <%= @deadline %>)</h3>
+  <div class="column col-4 p-0">
+    <div class="m-0 p-0" id="penalties"><h1>penalties</h1></div>
+    <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
   </div>
 </div>
