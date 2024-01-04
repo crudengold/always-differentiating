@@ -18,3 +18,6 @@
     </div>
   </div>
 <% end %>
+<% if @illegal_players.empty? %>
+  <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
+<% end %>
