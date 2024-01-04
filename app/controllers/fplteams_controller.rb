@@ -9,7 +9,7 @@ class FplteamsController < ApplicationController
     all_data = JSON.parse(user_serialized)
     # get the current gameweek
     all_data["events"].each do |num|
-      if num["is_previous"] == true
+      if num["is_current"] == true
         @gameweek = num["id"]
         @deadline = Time.zone.parse(num["deadline_time"]).utc
       end
