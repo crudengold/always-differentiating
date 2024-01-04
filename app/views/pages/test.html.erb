@@ -1,0 +1,11 @@
+<%# <h1>test page</h1> %>
+<div class="row w-100">
+  <div class="main-box column col-8 m-0 p-1" id="illegal players">
+    <h1>illegal players</h1>
+    <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
+  </div>
+  <div class="column col-4 p-0">
+    <div class="m-0 p-0" id="penalties"><h1>penalties</h1></div>
+    <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
+  </div>
+</div>

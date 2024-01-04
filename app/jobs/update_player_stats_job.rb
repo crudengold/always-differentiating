@@ -4,15 +4,19 @@ class UpdatePlayerStatsJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
+    # fpl all data api
     general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
     user_serialized = URI.open(general_url).read
     all_data = JSON.parse(user_serialized)
-    # get the current gameweek
+    # set the gameweek to generic
     gameweek = 0
+    # set the deadline to generic
+    deadline = ""
+    # get the next gameweek and tweak the gameweek and deadline accordingly
     all_data["events"].each do |num|
       if num["is_next"] == true
         gameweek = num["id"]
-        deadline = num["deadline_time"]
+        deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
     if SelectedByStat.last.gameweek != gameweek
@@ -56,8 +60,10 @@ class UpdatePlayerStatsJob < ApplicationJob
     else
       print "Stats already logged for Gameweek #{gameweek}"
     end
-    after_deadline = Time.zone.parse(deadline).utc + 90.minutes
-    GetPendingPenaltiesJob.set(wait: 1.minute).perform_later
+    after_deadline = deadline + 90.minutes
+    # get penalties one minute later
+    GetPendingPenaltiesJob.perform_now
+    # get current picks 90 minutes after deadline
     GetCurrentPicksJob.set(wait_until: after_deadline).perform_later
   end
 end
