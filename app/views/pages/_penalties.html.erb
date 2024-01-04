@@ -1,0 +1,24 @@
+<div class="column" style="text-align: center">
+  <% if penalties.empty? && !illegal_players.empty?%>
+    <div id="no-warnings">
+      <h2><strong>No transfers needed in gameweek <%= gameweek %></strong></h2>
+      <h5>Nobody owns any players over 15% owned</h5>
+    </div>
+  <% end %>
+  <% unless penalties.empty? %>
+    <div class="m-2">
+      <h2><strong>Warnings:</strong></h2>
+      <h5>The following must be transferred out by the deadline:</h5>
+      <% penalty_players.each do |player_id| %>
+        <div class="penalty-card">
+          <h5><strong><%= Player.find(player_id).web_name %> (<%= SelectedByStat.find_by(player_id: player_id, gameweek: gameweek).selected_by %>%)</strong></h5>
+          <% penalties.each do |penalty| %>
+            <% if penalty.player_id == player_id %>
+              <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
