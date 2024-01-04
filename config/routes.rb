@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "/new", to: "pages#new"
   get "/test", to: "pages#test"
   get "/fplteams", to: "fplteams#index"
-  get "fplteams/:id/index", to: "fplteams#show", as: :fplteam
+  get "fplteams/:id", to: "fplteams#show", as: :fplteam
   require "sidekiq/web"
   # Sidekiq::Web.set :sessions, false
   authenticate :user, ->(user) { user.admin? } do
