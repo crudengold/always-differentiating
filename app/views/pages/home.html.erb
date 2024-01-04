@@ -5,7 +5,7 @@
         <h1 style="text-align: center"><strong>Illegal players</strong></h1>
         <div>
           <h4>Numbers for Gameweek <%= @gameweek %></h4>
-          <h6>Updated at <%= @update_time %></h6>
+          <h6><%= @update_time.strftime("Updated at: %I:%M UK time, %d %b") %></h6>
         </div>
         <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
       </div>
@@ -17,4 +17,7 @@
       <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
     </div>
   </div>
+<% end %>
+<% if @illegal_players.empty? %>
+  <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
 <% end %>
