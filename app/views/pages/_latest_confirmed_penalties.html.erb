@@ -1,0 +1,19 @@
+<div class="column" style="text-align: center">
+  <% if penalties.empty? %>
+    <div id="no-warnings">
+      <h2><strong>No penalties in gameweek <%= gameweek %></strong></h2>
+    </div>
+  <% end %>
+  <% unless penalties.empty? %>
+    <div class="m-2">
+      <h2><strong>Confirmed penalties:</strong></h2>
+      <h5>The following penalties have been applied:</h5>
+      <% penalties.each do |penalty| %>
+        <div class="confirmed-penalty-card">
+          <h5><strong><%= Player.find(penalty.player_id).web_name %> (<%= SelectedByStat.find_by(player_id: penalty.player_id, gameweek: gameweek).selected_by %>%)</strong></h5>
+          <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
