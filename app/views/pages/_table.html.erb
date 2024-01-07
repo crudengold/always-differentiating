@@ -1,0 +1,29 @@
+<div class="flex row justify-content-center mb-5" style="text-align: center;">
+
+    <table style="border-collapse: collapse; width: 100%; margin-top: 20px; margin-bottom: 20px; border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
+      <thead>
+        <tr>
+          <th style="border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;">Pos</th>
+          <th style="border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px; border-left: 1px solid rgba(0, 0, 0, 0.2);">Team</th>
+          <th style="border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;">Points</th>
+          <th style="border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;">Deductions</th>
+          <th style="border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Fplteam.all.each_with_index do |team_data, i| %>
+          <% total = 0 %>
+          <% unless Penalty.where(fplteam: team_data, status: "confirmed").empty? %>
+            <% Penalty.where(fplteam: team_data, status: "confirmed").each {|penalty| total += penalty.points_deducted} %>
+          <% end %>
+          <tr>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); border-left: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= i + 1 %></td>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= link_to team_data[:entry_name], fplteam_path(Fplteam.find_by(entry_name: team_data[:entry_name])), style:"text-decoration: none" %></td>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= team_data[:total] %></td>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= total %></td>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= team_data[:total] - total %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>

@@ -19,5 +19,15 @@
   </div>
 <% end %>
 <% if @illegal_players.empty? %>
-  <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
+  <div class="row" style="width: 100%">
+    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center">
+      <%= render 'table' %>
+    </div>
+    <div class="column col-4 p-0" id="right-column">
+      <div class="m-0 p-0" id="penalties">
+        <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
+      </div>
+      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
+    </div>
+  </div>
 <% end %>

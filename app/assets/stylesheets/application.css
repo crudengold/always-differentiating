@@ -106,3 +106,12 @@ h3 {
   border-radius: 5px;
   margin-bottom: 10px
 }
+
+.confirmed-penalty-card {
+  border-radius: 5px;
+  box-shadow: 2px 2px grey;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #d15416;
+}
