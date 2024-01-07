@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_14_193013) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_07_190312) do
   create_table "fplteams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,6 +23,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_14_193013) do
     t.integer "entry"
     t.string "entry_name"
     t.string "discord_name"
+    t.integer "deductions", default: 0
+    t.integer "total_after_deductions", default: 0
   end
 
   create_table "penalties", force: :cascade do |t|
