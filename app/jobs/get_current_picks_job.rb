@@ -46,6 +46,7 @@ class GetCurrentPicksJob < ApplicationJob
       end
     end
     UpdatePlayerStatsJob.set(wait_until: next_deadline_minus_one).perform_later
+    UpdateTeamScoresJob.perform_now
     # UpdatePenaltiesJob.set(wait: 1.minute).perform_later
   end
 end

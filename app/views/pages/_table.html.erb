@@ -11,17 +11,13 @@
         </tr>
       </thead>
       <tbody>
-        <% Fplteam.all.each_with_index do |team_data, i| %>
-          <% total = 0 %>
-          <% unless Penalty.where(fplteam: team_data, status: "confirmed").empty? %>
-            <% Penalty.where(fplteam: team_data, status: "confirmed").each {|penalty| total += penalty.points_deducted} %>
-          <% end %>
+        <% Fplteam.all.order(total_after_deductions: :desc).each_with_index do |team_data, i| %>
           <tr>
             <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); border-left: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= i + 1 %></td>
             <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= link_to team_data[:entry_name], fplteam_path(Fplteam.find_by(entry_name: team_data[:entry_name])), style:"text-decoration: none" %></td>
             <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= team_data[:total] %></td>
-            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= total %></td>
-            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= team_data[:total] - total %></td>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= team_data[:deductions] %></td>
+            <td style="border-right: 1px solid rgba(0, 0, 0, 0.2); text-align: center; padding: 8px;"><%= team_data[:total_after_deductions] %></td>
           </tr>
         <% end %>
       </tbody>
