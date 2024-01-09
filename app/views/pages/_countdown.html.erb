@@ -1,10 +1,6 @@
 <%# Not sure what to do with this, needs reworking %>
 <div style="text-align: center">
-  <% if @illegal_players.empty? %>
-    <h5>Screenshot for Gameweek <%= @gameweek %> in:</h5>
-  <% else %>
-    <h5>Screenshot for Gameweek <%= @gameweek - 1 %> in:</h5>
-  <% end %>
+  <h5>Screenshot for Gameweek <%= gameweek %> in:</h5>
 </div>
 
 <div id="countdown" style="text-align: center">
