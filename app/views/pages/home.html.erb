@@ -20,10 +20,10 @@
 <% end %>
 <% if @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center">
+    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center" id="table-outside">
       <%= render 'table' %>
     </div>
-    <div class="column col-4 p-0" id="right-column">
+    <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
       <div class="m-0 p-0" id="penalties">
         <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
       </div>

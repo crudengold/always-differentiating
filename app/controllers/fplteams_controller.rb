@@ -1,4 +1,6 @@
 class FplteamsController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def index
     @managers = Fplteam.all
   end
