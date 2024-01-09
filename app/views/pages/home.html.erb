@@ -16,7 +16,7 @@
       <div class="m-0 p-0" id="penalties">
         <%= render 'penalties', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek %>
       </div>
-      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
+      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek + 1 %></div>
     </div>
   </div>
 <% end %>
@@ -29,7 +29,7 @@
       <div class="m-0 p-0" id="penalties">
         <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
       </div>
-      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one %></div>
+      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
     </div>
   </div>
 <% end %>
