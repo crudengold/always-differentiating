@@ -1,6 +1,6 @@
-<div class="column w-100">
+<div class="column col-xs-12 col-m-8">
   <div class="d-flex justify-content-center mb-3">
-    <div class="manager-details p-2" style="width: 50%; background-color: #69B578; border-radius: 5px">
+    <div class="manager-details p-2" style="width: 100%; background-color: #69B578; border-radius: 5px">
       <h1 style="text-align: center"><%= @manager.entry_name %></h1>
       <h3 style="text-align: center"><%= @manager.player_name %>, <%= @manager.discord_name %></h3>
       <div class="scores row" style="text-align: center">
@@ -17,16 +17,18 @@
   <%# </ul> %>
 
   <div class="row d-flex justify-content-center">
-    <div class="column col-3">
-      <h4>Gameweek <%= @gameweek %> picks</h4>
-      <ul>
-      <% Pick.where(fplteam: @manager, gameweek: @gameweek).each do |pick| %>
+    <div class="column col-6">
+      <h4 style="text-align: center">GW <%= @gameweek %> picks</h4>
+      <% Pick.where(fplteam: @manager, gameweek: @gameweek).first(11).each do |pick| %>
         <%= render 'player', pick: pick %>
       <% end %>
-      </ul>
+      <hr class="solid">
+      <% Pick.where(fplteam: @manager, gameweek: @gameweek).last(4).each do |pick| %>
+        <%= render 'player', pick: pick %>
+      <% end %>
     </div>
-    <div class="column col-3">
-      <h4>Past penalties</h4>
+    <div class="column col-6">
+      <h4 style="text-align: center">Past penalties</h4>
       <% penalties = Penalty.where(fplteam: @manager, status: "confirmed").order(gameweek: :desc) %>
       <% penalties.each do |penalty| %>
         <li>Gameweek <%= penalty.gameweek %>, <%= penalty.player.web_name %>, <%= penalty.points_deducted %> points</li>
