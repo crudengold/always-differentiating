@@ -7,10 +7,12 @@
           <h4>Numbers for Gameweek <%= @gameweek %></h4>
           <h6><%= @update_time.strftime("Updated at: %I:%M UK time, %d %b") %></h6>
         </div>
-        <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
+        <div class="p-1 bg-white" style="border-radius: 5px">
+          <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
+        </div>
       </div>
     </div>
-    <div class="column col-4 p-0" id="right-column">
+    <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
       <div class="m-0 p-0" id="penalties">
         <%= render 'penalties', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek %>
       </div>
@@ -20,10 +22,10 @@
 <% end %>
 <% if @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center">
+    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center" id="table-outside">
       <%= render 'table' %>
     </div>
-    <div class="column col-4 p-0" id="right-column">
+    <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
       <div class="m-0 p-0" id="penalties">
         <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
       </div>
