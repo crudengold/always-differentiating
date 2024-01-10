@@ -1,7 +1,7 @@
 <% unless @illegal_players.empty? %>
   <div class="row" style="width: 100%">
     <div class="column col-xs-12 col-sm-8" style="text-align: center" data-controller="tabs">
-      <%= render 'tabs' %>
+      <%= render 'tabs', illegal_players: @illegal_players %>
       <div class="tab-content">
         <div class="main-box" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
           <div>
@@ -27,7 +27,7 @@
 <% end %>
 <% if @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center" id="table-outside">
+    <div class="column col-xs-12 col-sm-8" style="text-align: center" id="table-outside">
       <%= render 'table' %>
     </div>
     <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
