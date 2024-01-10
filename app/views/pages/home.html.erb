@@ -1,14 +1,19 @@
 <% unless @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column col-xs-12 col-sm-8" style="text-align: center">
-      <div class="main-box">
-        <h1 style="text-align: center"><strong>Illegal players</strong></h1>
-        <div>
-          <h4>Numbers for Gameweek <%= @gameweek %></h4>
-          <h6><%= @update_time.strftime("Updated at: %I:%M UK time, %d %b") %></h6>
+    <div class="column col-xs-12 col-sm-8" style="text-align: center" data-controller="tabs">
+      <%= render 'tabs', illegal_players: @illegal_players %>
+      <div class="tab-content">
+        <div class="main-box" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
+          <div>
+            <h4>Numbers for <strong>Gameweek <%= @gameweek %></strong></h4>
+            <h6><%= @update_time.strftime("Updated at: %I:%M UK time, %d %b") %></h6>
+          </div>
+          <div class="p-1 bg-white" style="border-radius: 5px">
+            <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
+          </div>
         </div>
-        <div class="p-1 bg-white" style="border-radius: 5px">
-          <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
+        <div class="table d-none" data-tabs-target="content" data-tab="2">
+          <%= render 'table' %>
         </div>
       </div>
     </div>
@@ -22,7 +27,7 @@
 <% end %>
 <% if @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column d-flex col-xs-12 col-sm-8 justify-content-center" style="text-align: center" id="table-outside">
+    <div class="column col-xs-12 col-sm-8" style="text-align: center" id="table-outside">
       <%= render 'table' %>
     </div>
     <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
