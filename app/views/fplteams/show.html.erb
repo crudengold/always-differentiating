@@ -33,6 +33,9 @@
       <% penalties.each do |penalty| %>
         <li>Gameweek <%= penalty.gameweek %>, <%= penalty.player.web_name %>, <%= penalty.points_deducted %> points</li>
       <% end %>
+      <% if penalties.empty? %>
+        <p style="text-align: center">No penalties... yet</p>
+      <% end %>
     </div>
   </div>
 </div>
