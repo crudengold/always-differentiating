@@ -37,8 +37,8 @@ class GetCurrentPicksJob < ApplicationJob
           player_log = Player.find_by(fpl_id: player["element"])
           # create a new pick for each player
           pick = Pick.new
-          pick.player_id = player_log.id
-          pick.fplteam_id = manager.id
+          pick.player = player_log
+          pick.fplteam = manager
           pick.gameweek = gameweek
           pick.save
           puts "pick created for #{player_log.web_name}!"
@@ -46,7 +46,7 @@ class GetCurrentPicksJob < ApplicationJob
       end
     end
     UpdatePlayerStatsJob.set(wait_until: next_deadline_minus_one).perform_later
-    UpdateTeamScoresJob.perform_now
-    # UpdatePenaltiesJob.set(wait: 1.minute).perform_later
+    UpdatePenaltiesJob.perform_now
+    UpdateTeamScoresJob.set(wait: 1.minute).perform_later
   end
 end

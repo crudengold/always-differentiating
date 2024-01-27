@@ -12,7 +12,7 @@
         <div class="confirmed-penalty-card">
           <h5><strong><%= Player.find(penalty.player_id).web_name %> (<%= SelectedByStat.find_by(player_id: penalty.player_id, gameweek: gameweek).selected_by %>%)</strong></h5>
           <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
-          <p style="margin: 0px"><%= penalty.points_deducted %> points deducted</p>
+          <p style="margin: 0px"><%= penalty.points_deducted %> points deducted (so far)</p>
         </div>
       <% end %>
     </div>

@@ -8,7 +8,6 @@ one:
   fpl_id: 1
   photo: MyString
   second_name: MyString
-  selected_by_percent: 1.5
   team: 1
   total_points: 1
   web_name: MyString
@@ -21,7 +20,6 @@ two:
   fpl_id: 1
   photo: MyString
   second_name: MyString
-  selected_by_percent: 1.5
   team: 1
   total_points: 1
   web_name: MyString
