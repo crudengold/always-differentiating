@@ -6,15 +6,16 @@
     </div>
   <% end %>
   <% unless penalties.empty? %>
-    <div class="m-2">
+    <div class="m-2" data-controller="penalties-clipboard">
       <h2><strong>Warnings:</strong></h2>
+      <a data-penalties-clipboard-target="copyButton" data-action="penalties-clipboard#penaltiesList" style="color: blue; text-decoration: underline">Click to copy these to clipboard</a>
       <h5>The following must be transferred out by the deadline:</h5>
       <% penalty_players.each do |player_id| %>
-        <div class="penalty-card">
+        <div class="penalty-card" data-penalties-clipboard-target="player">
           <h5><strong><%= Player.find(player_id).web_name %> (<%= SelectedByStat.find_by(player_id: player_id, gameweek: gameweek).selected_by %>%)</strong></h5>
           <% penalties.each do |penalty| %>
             <% if penalty.player_id == player_id %>
-              <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
+              <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.discord_name %>)</p>
             <% end %>
           <% end %>
         </div>
