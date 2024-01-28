@@ -17,6 +17,7 @@ export default class extends Controller {
       penalties.push(player.innerText)
     })
     navigator.clipboard.writeText(penalties.join("\n\n------\n\n"))
+    this.copyButtonTarget.innerText = "Copied!"
     // console.log(penalties.join("\n\n------\n\n"))
   }
 }
