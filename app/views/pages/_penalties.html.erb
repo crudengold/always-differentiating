@@ -15,7 +15,7 @@
           <h5><strong><%= Player.find(player_id).web_name %> (<%= SelectedByStat.find_by(player_id: player_id, gameweek: gameweek).selected_by %>%)</strong></h5>
           <% penalties.each do |penalty| %>
             <% if penalty.player_id == player_id %>
-              <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.discord_name %>)</p>
+              <p><%= penalty.fplteam.entry_name %> – <%= penalty.fplteam.discord_name %></p>
             <% end %>
           <% end %>
         </div>
