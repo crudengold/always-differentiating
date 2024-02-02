@@ -8,7 +8,7 @@
   <% unless penalties.empty? %>
     <div class="m-2" data-controller="penalties-clipboard">
       <h2><strong>Warnings:</strong></h2>
-      <a data-penalties-clipboard-target="copyButton" data-action="penalties-clipboard#penaltiesList" style="color: blue; text-decoration: underline">Click to copy these to clipboard</a>
+      <a href="#" data-penalties-clipboard-target="copyButton" data-action="penalties-clipboard#penaltiesList" style="color: blue; text-decoration: underline">Click to copy these to clipboard</a>
       <h5>The following must be transferred out by the deadline:</h5>
       <% penalty_players.each do |player_id| %>
         <div class="penalty-card" data-penalties-clipboard-target="player">
