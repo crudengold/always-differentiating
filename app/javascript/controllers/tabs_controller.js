@@ -26,4 +26,14 @@ export default class extends Controller {
   findContentTargetByTabNumber(tabNumber) {
       return this.contentTargets.find(content => content.dataset.tab === tabNumber);
     }
+
+  illegalList() {
+    console.log("copied");
+    // html2canvas(document.querySelector(".main-box")).then(canvas => {
+    //   canvas.toBlob(function(blob) {
+    //     const item = new ClipboardItem({ "image/png": blob });
+    //     navigator.clipboard.write([item]);
+    //   });
+    // });
+  }
   }

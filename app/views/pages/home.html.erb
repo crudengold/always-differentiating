@@ -2,11 +2,13 @@
   <div class="row" style="width: 100%">
     <div class="column col-xs-12 col-sm-8" style="text-align: center" data-controller="tabs">
       <%= render 'tabs', illegal_players: @illegal_players %>
-      <div class="tab-content">
+      <div class="tab-content" data-controller="players-clipboard">
         <div class="main-box" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
           <div>
-            <h4>Numbers for <strong>Gameweek <%= @gameweek %></strong></h4>
+            <h4>Screenshot for <strong>Gameweek <%= @gameweek %></strong></h4>
             <h6><%= @update_time.strftime("Updated at: %I:%M UK time, %d %b") %></h6>
+            <a href="#" style="font-size: 14px; text-decoration: none; color: white" data-players-clipboard-target="copyPlayersButton" data-action="players-clipboard#illegalList">Click here to copy screenshot to clipboard</a>
+            <p style="font-size: 10px">(this does not work in Firefox)</p>
           </div>
           <div class="p-1 bg-white" style="border-radius: 5px">
             <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
