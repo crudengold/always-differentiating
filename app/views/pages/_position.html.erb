@@ -1,7 +1,7 @@
-<% illegal_players.each do |stat| %>
-  <% if stat.player.element_type == position %>
-    <% if stat.selected_by >= percentage %>
-      <%= render 'player', stat: stat, position: position %>
+<% illegal_players.each do |player| %>
+  <% if player[0].element_type == position %>
+    <% if player[1] >= percentage %>
+      <%= render 'player', player: player, position: position %>
     <% end %>
   <% end %>
 <% end %>
