@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_01_07_190312) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "fplteams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -29,8 +32,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_07_190312) do
 
   create_table "penalties", force: :cascade do |t|
     t.integer "points_deducted"
-    t.integer "fplteam_id", null: false
-    t.integer "player_id", null: false
+    t.bigint "fplteam_id", null: false
+    t.bigint "player_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "pending"
@@ -40,8 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_07_190312) do
   end
 
   create_table "picks", force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "fplteam_id", null: false
+    t.bigint "player_id", null: false
+    t.bigint "fplteam_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "gameweek"
@@ -68,7 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_07_190312) do
   create_table "selected_by_stats", force: :cascade do |t|
     t.integer "gameweek"
     t.float "selected_by"
-    t.integer "player_id", null: false
+    t.bigint "player_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["player_id"], name: "index_selected_by_stats_on_player_id"
