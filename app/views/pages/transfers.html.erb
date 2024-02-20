@@ -1,1 +1,6 @@
-<% raise %>
+<% @transfers.each do |key, value| %>
+  <div class="transfer">
+    <h2><%= key %></h2>
+    <p><%= value %></p>
+  </div>
+<% end %>

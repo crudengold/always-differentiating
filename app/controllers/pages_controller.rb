@@ -65,21 +65,23 @@ class PagesController < ApplicationController
     # for each fpl team
     Fplteam.all.each do |team|
     # add team to transfers hash with empty hash as value
-      transfers[team.entry_name] = {in: [], out: []}
+      team_name = team.entry_name
+      transfers[team_name] = {in: [], out: []}
     # get last week's picks
       last_week = team.picks.where("gameweek = ?", @gameweek - 1)
     # get this week's picks
       this_week = team.picks.where("gameweek = ?", @gameweek)
     # compare the two
-      raise
       last_week.each do |pick|
     # if a player is in last week's picks but not this week's, add to team hash as key
         if this_week.where("player_id = ?", pick.player_id).empty?
-          transfers[team][:out] << pick.player_id
+          transfers[team_name][:out] << pick.player_id
         end
     # if a player is in this week's picks but not last week's, add to team hash as value
+      end
+      this_week.each do |pick|
         if last_week.where("player_id = ?", pick.player_id).empty?
-          transfers[team][:in] << pick.player_id
+          transfers[team_name][:in] << pick.player_id
         end
       end
     end
