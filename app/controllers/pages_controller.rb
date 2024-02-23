@@ -18,7 +18,7 @@ class PagesController < ApplicationController
         @deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
-    # @gameweek = 22
+    # @gameweek = 25
     @deadline_minus_one = @deadline - 24.hours
     @update_time = SelectedByStat.last.created_at
     @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
