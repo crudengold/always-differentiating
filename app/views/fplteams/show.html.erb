@@ -20,11 +20,11 @@
     <div class="column col-6">
       <h4 style="text-align: center">GW <%= @gameweek %> picks</h4>
       <% Pick.where(fplteam: @manager, gameweek: @gameweek).first(11).each do |pick| %>
-        <%= render 'player', pick: pick %>
+        <%= render 'player', pick: pick, gameweek: @gameweek %>
       <% end %>
       <hr class="solid">
       <% Pick.where(fplteam: @manager, gameweek: @gameweek).last(4).each do |pick| %>
-        <%= render 'player', pick: pick %>
+        <%= render 'player', pick: pick, gameweek: @gameweek %>
       <% end %>
     </div>
     <div class="column col-6">
