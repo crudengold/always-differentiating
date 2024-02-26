@@ -1,6 +1,24 @@
-<% @transfers.each do |key, value| %>
-  <div class="transfer">
-    <h2><%= key %></h2>
-    <p><%= value %></p>
-  </div>
-<% end %>
+<div style="width: 100%">
+  <% @transfers.each do |key, value| %>
+    <% count = value[:out].count %>
+    <div class="transfer-team">
+      <div class="team-name" style="text-align: center">
+        <h2><%= key %></h2>
+      </div>
+      <div class="d-flex row align-items-center">
+        <div class="transfers-out col-6">
+          <% count.times do |i| %>
+            <% player = Player.find(value[:out][i - 1]) %>
+            <p><%= player_name %></p>
+          <% end %>
+        </div>
+        <div class="transfers-in col-6">
+          <% count.times do |i| %>
+            <% player_name = Player.find(value[:in][i - 1]).web_name %>
+            <p><%= player_name %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

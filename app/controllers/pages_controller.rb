@@ -18,7 +18,7 @@ class PagesController < ApplicationController
         @deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
-    # @gameweek = 22
+    @gameweek = 25
     @deadline_minus_one = @deadline - 24.hours
     @update_time = SelectedByStat.last.created_at
     @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
@@ -67,10 +67,11 @@ class PagesController < ApplicationController
     # add team to transfers hash with empty hash as value
       team_name = team.entry_name
       transfers[team_name] = {in: [], out: []}
-    # get last week's picks
+      # get last week's picks
       last_week = team.picks.where("gameweek = ?", @gameweek - 1)
-    # get this week's picks
+      # get this week's picks
       this_week = team.picks.where("gameweek = ?", @gameweek)
+      # raise
     # compare the two
       last_week.each do |pick|
     # if a player is in last week's picks but not this week's, add to team hash as key
