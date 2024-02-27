@@ -22,7 +22,8 @@ class UpdatePenaltiesJob < ApplicationJob
     all_picks_for_gw = Pick.where(gameweek: gameweek)
     all_picks_for_gw.each do |pick|
       # if the selected by stat for that pick is 15 or over
-      if SelectedByStat.find_by(player: pick.player, gameweek: gameweek).selected_by >= 15
+      if pick.player.past_ownership_stats[gameweek.to_s] >= 15
+      # if SelectedByStat.find_by(player: pick.player, gameweek: gameweek).selected_by >= 15
         # if there is no pending penalty for that player for that gameweek
         if Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam).empty?
           # create a penalty
@@ -55,8 +56,8 @@ class UpdatePenaltiesJob < ApplicationJob
         end
       end
       # if the selected by stat for that pick is 10 or over, but less than 15, and there is no pick for that player for the previous gameweek
-      if SelectedByStat.find_by(player: pick.player, gameweek: gameweek).selected_by < 15 &&
-         SelectedByStat.find_by(player: pick.player, gameweek: gameweek).selected_by >= 10 &&
+      if pick.player.past_ownership_stats[gameweek.to_s] < 15 &&
+         pick.player.past_ownership_stats[gameweek.to_s] >= 10 &&
          Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - 1)).nil?
         # create a penalty
         # set the points deducted to 4
