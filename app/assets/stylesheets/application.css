@@ -18,6 +18,7 @@
   width: 800px;
   margin-top: 40px;
   font-family: poppins;
+  max-width: 1200px
 }
 
 .banner {
@@ -43,6 +44,7 @@
 @media (max-width: 576px) {
   .main-box {
     max-width: 100%;
+    font-size: 80%;
   }
 }
 

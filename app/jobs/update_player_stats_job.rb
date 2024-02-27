@@ -19,7 +19,11 @@ class UpdatePlayerStatsJob < ApplicationJob
         deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
-    if SelectedByStat.last.gameweek != gameweek
+    # new version below, commenting while i work this out
+    if Player.find_by(web_name: "Salah").past_ownership_stats.key?(gameweek) == false
+    # if the last gameweek in the database is not the current gameweek
+    # if SelectedByStat.last.gameweek != gameweek
+      # for each player in the fpl api
       all_data["elements"].each do |player|
         # search for player record by fpl id
         # if record doesn't yet exist, create one
@@ -37,23 +41,25 @@ class UpdatePlayerStatsJob < ApplicationJob
           new_player.team = player["team"]
           new_player.total_points = player["total_points"]
           new_player.shirt = player["team_code"]
+          new_player.past_ownership_stats[gameweek.to_s] = player["selected_by_percent"]
           new_player.save
           puts "#{new_player.web_name} added\n"
-          SelectedByStat.create!(
-            gameweek: gameweek,
-            selected_by: player["selected_by_percent"],
-            player: new_player
-          )
+          # SelectedByStat.create!(
+          #   gameweek: gameweek,
+          #   selected_by: player["selected_by_percent"],
+          #   player: new_player
+          # )
           puts "stat created for #{new_player.web_name}\n"
         else
           player_record = Player.find_by(fpl_id: player["id"])
           player_record.total_points = player["total_points"]
+          player_record.past_ownership_stats[gameweek.to_s] = player["selected_by_percent"]
           player_record.save!
-          SelectedByStat.create!(
-            gameweek: gameweek,
-            selected_by: player["selected_by_percent"],
-            player: player_record
-          )
+          # SelectedByStat.create!(
+          #   gameweek: gameweek,
+          #   selected_by: player["selected_by_percent"],
+          #   player: player_record
+          # )
           puts "stat created for #{player_record.web_name}\n"
         end
       end

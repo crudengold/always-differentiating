@@ -10,7 +10,7 @@
       <h5>The following penalties have been applied:</h5>
       <% penalties.each do |penalty| %>
         <div class="confirmed-penalty-card">
-          <h5><strong><%= Player.find(penalty.player_id).web_name %> (<%= SelectedByStat.find_by(player_id: penalty.player_id, gameweek: gameweek).selected_by %>%)</strong></h5>
+          <h5><strong><%= penalty.player.web_name %> (<%= penalty.player.past_ownership_stats[gameweek] %>%)</strong></h5>
           <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
           <p style="margin: 0px"><%= penalty.points_deducted %> points deducted (so far)</p>
         </div>
