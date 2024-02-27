@@ -17,6 +17,9 @@
         <div class="table d-none" data-tabs-target="content" data-tab="2">
           <%= render 'table' %>
         </div>
+        <div class="transfers d-none" data-tabs-target="content" data-tab="3">
+          <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
+        </div>
       </div>
     </div>
     <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 24px" id="right-column">
@@ -29,10 +32,27 @@
 <% end %>
 <% if @illegal_players.empty? %>
   <div class="row" style="width: 100%">
-    <div class="column col-xs-12 col-sm-8" style="text-align: center" id="table-outside">
-      <%= render 'table' %>
+    <div class="column col-xs-12 col-sm-8" style="text-align: center" id="table-outside" data-controller="tabs">
+      <%= render 'tabs', illegal_players: @illegal_players, gameweek: @gameweek - 1 %>
+      <div class="table" data-tabs-target="content" data-tab="2">
+        <%= render 'table' %>
+      </div>
+      <div class="transfers d-none" data-tabs-target="content" data-tab="3">
+        <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
+      </div>
+      <div class="main-box d-none" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
+        <div>
+          <h4>Screenshot for <strong>Gameweek <%= @gameweek- 1 %></strong></h4>
+          <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
+          <%# <a href="#" style="font-size: 14px; text-decoration: none; color: white" data-players-clipboard-target="copyPlayersButton" data-action="players-clipboard#illegalList">Click here to copy screenshot to clipboard</a>
+          <p style="font-size: 10px">(this does not work in Firefox)</p> %>
+        </div>
+        <div class="p-1 bg-white" style="border-radius: 5px">
+          <%= render 'players', illegal_players: @last_week_illegal_players, percentage: 10 %>
+        </div>
+      </div>
     </div>
-    <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 40px" id="right-column">
+    <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 53px" id="right-column">
       <div class="m-0 p-0" id="penalties">
         <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
       </div>
