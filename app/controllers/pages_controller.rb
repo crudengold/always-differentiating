@@ -27,6 +27,7 @@ class PagesController < ApplicationController
     @illegal_players = get_illegals(@gameweek)
     @illegal_players = @illegal_players.sort_by {|_key, value| value}.reverse.to_h
     @last_week_illegal_players = get_illegals(@last_week)
+    @last_week_illegal_players = @last_week_illegal_players.sort_by {|_key, value| value}.reverse.to_h
     @penalties = Penalty.where("gameweek = ?", @gameweek)
     @latest_confirmed_penalties = Penalty.where("status = 'confirmed' AND gameweek = ?", @gameweek - 1)
     @penalty_players = @penalties.distinct.pluck(:player_id)
