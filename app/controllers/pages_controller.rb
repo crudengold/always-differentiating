@@ -43,6 +43,7 @@ class PagesController < ApplicationController
 
   def transfers
     @transfers = get_transfers
+    @gameweek = get_gameweek
   end
 
   def position(num)
@@ -58,27 +59,31 @@ class PagesController < ApplicationController
     end
   end
 
-  def get_transfers
-    transfers = {}
-    # get the current gameweek
+  def get_gameweek
     general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
     user_serialized = URI.open(general_url).read
     all_data = JSON.parse(user_serialized)
     # get the current gameweek
     all_data["events"].each do |num|
       if num["is_current"] == true
-        @gameweek = num["id"]
+        return num["id"]
       end
     end
+  end
+
+  def get_transfers
+    transfers = {}
+    gameweek = get_gameweek
+    # get the current gameweek
     # for each fpl team
     Fplteam.all.each do |team|
     # add team to transfers hash with empty hash as value
       team_name = team.entry_name
       transfers[team_name] = {in: [], out: []}
       # get last week's picks
-      last_week = team.picks.where("gameweek = ?", @gameweek - 1)
+      last_week = team.picks.where("gameweek = ?", gameweek - 1)
       # get this week's picks
-      this_week = team.picks.where("gameweek = ?", @gameweek)
+      this_week = team.picks.where("gameweek = ?", gameweek)
       # raise
     # compare the two
       last_week.each do |pick|

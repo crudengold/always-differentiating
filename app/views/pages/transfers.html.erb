@@ -9,13 +9,13 @@
         <div class="transfers-out col-6">
           <% count.times do |i| %>
             <% player = Player.find(value[:out][i - 1]) %>
-            <p><%= player_name %></p>
+            <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@gameweek.to_s], gameweek: @gameweek  %>
           <% end %>
         </div>
         <div class="transfers-in col-6">
           <% count.times do |i| %>
-            <% player_name = Player.find(value[:in][i - 1]).web_name %>
-            <p><%= player_name %></p>
+            <% player = Player.find(value[:in][i - 1]) %>
+            <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@gameweek.to_s], gameweek: @gameweek  %>
           <% end %>
         </div>
       </div>
