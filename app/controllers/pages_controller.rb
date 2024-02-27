@@ -18,21 +18,19 @@ class PagesController < ApplicationController
         @deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
-    @gameweek = 25
+    # @gameweek = 25
+    @last_week = @gameweek - 1
     @deadline_minus_one = @deadline - 24.hours
     # @update_time = SelectedByStat.last.created_at
     @update_time = Player.last.updated_at
     # @illegal_players = SelectedByStat.where("selected_by > ? AND gameweek = ?", 10, @gameweek).order(selected_by: :desc)
-    @illegal_players = {}
-    Player.all.each do |player|
-      if !player.past_ownership_stats[@gameweek.to_s].nil? && player.past_ownership_stats[@gameweek.to_s] > 10
-        @illegal_players[player] = player.past_ownership_stats[@gameweek.to_s]
-      end
-    end
+    @illegal_players = get_illegals(@gameweek)
     @illegal_players = @illegal_players.sort_by {|_key, value| value}.reverse.to_h
+    @last_week_illegal_players = get_illegals(@last_week)
     @penalties = Penalty.where("gameweek = ?", @gameweek)
     @latest_confirmed_penalties = Penalty.where("status = 'confirmed' AND gameweek = ?", @gameweek - 1)
     @penalty_players = @penalties.distinct.pluck(:player_id)
+    @transfers = get_transfers
   end
 
   def test
@@ -69,6 +67,16 @@ class PagesController < ApplicationController
         return num["id"]
       end
     end
+  end
+
+  def get_illegals(gameweek)
+    illegal_players = {}
+    Player.all.each do |player|
+      if !player.past_ownership_stats[gameweek.to_s].nil? && player.past_ownership_stats[gameweek.to_s] > 10
+        illegal_players[player] = player.past_ownership_stats[gameweek.to_s]
+      end
+    end
+    return illegal_players
   end
 
   def get_transfers

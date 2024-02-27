@@ -7,16 +7,22 @@
       <li>
         <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">League table</a>
       </li>
+      <li>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="3">Latest transfers</a>
+      </li>
     </ul>
   </div>
 <% else %>
   <div style="margin-top: 10px">
     <ul class="list-inline tabs-underlined justify-content-center">
       <li>
-        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">League table</a>
+        <a href="#" class="tab-underlined active" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">League table</a>
       </li>
       <li>
-        <a href="#" class="tab-underlined active" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="1">Last week's illegal players</a>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="1">GW <%= gameweek %> screenshot</a>
+      </li>
+      <li>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="3">GW <%= gameweek %> transfers</a>
       </li>
     </ul>
   </div>
