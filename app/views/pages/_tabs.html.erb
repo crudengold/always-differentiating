@@ -1,28 +1,28 @@
 <% unless illegal_players.empty? %>
   <div style="margin-top: 10px">
-    <ul class="list-inline tabs-underlined justify-content-center">
+    <ul class="list-inline tabs-underlined justify-content-center" style="text-align: center">
       <li>
-        <a href="#" class="tab-underlined active" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="1">Illegal players</a>
+        <a href="#" class="tab-underlined active" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="1">Screenshot</a>
       </li>
       <li>
-        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">League table</a>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">Table</a>
       </li>
       <li>
-        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="3">Latest transfers</a>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="3">Transfers</a>
       </li>
     </ul>
   </div>
 <% else %>
   <div style="margin-top: 10px">
-    <ul class="list-inline tabs-underlined justify-content-center">
+    <ul class="list-inline tabs-underlined justify-content-center" style="text-align: center">
       <li>
-        <a href="#" class="tab-underlined active" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">League table</a>
+        <a href="#" class="tab-underlined active" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="2">Table</a>
       </li>
       <li>
-        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="1">GW <%= gameweek %> screenshot</a>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="1">Screenshot</a>
       </li>
       <li>
-        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="3">GW <%= gameweek %> transfers</a>
+        <a href="#" class="tab-underlined" data-action="tabs#changeTab" data-tabs-target="tab" data-tab="3">Transfers</a>
       </li>
     </ul>
   </div>

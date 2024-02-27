@@ -37,7 +37,7 @@
       <div class="table" data-tabs-target="content" data-tab="2">
         <%= render 'table' %>
       </div>
-      <div class="transfers d-none" data-tabs-target="content" data-tab="3">
+      <div class="transfers d-none d-flex justify-content-center" data-tabs-target="content" data-tab="3">
         <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
       </div>
       <div class="main-box d-none" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
