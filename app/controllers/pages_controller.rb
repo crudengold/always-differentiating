@@ -18,7 +18,7 @@ class PagesController < ApplicationController
         @deadline = Time.zone.parse(num["deadline_time"]).utc
       end
     end
-    @gameweek = 25
+    # @gameweek = 25
     @deadline_minus_one = @deadline - 24.hours
     # @update_time = SelectedByStat.last.created_at
     @update_time = Player.last.updated_at
