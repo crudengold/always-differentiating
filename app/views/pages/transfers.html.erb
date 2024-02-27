@@ -1,18 +1,24 @@
-<div style="width: 100%">
+<div style="width: 100%" class="d-flex row justify-content-center">
+  <h2 style="margin-top: 25px; text-align: center"><strong>Gameweek <%= @gameweek %> transfers</strong></h2>
   <% @transfers.each do |key, value| %>
+    <% team = Fplteam.find_by(entry_name: key) %>
     <% count = value[:out].count %>
-    <div class="transfer-team">
+    <div class="transfer-team col-5" style="border-radius: 5px; background-color: #69b578; padding: 20px; margin: 25px;">
       <div class="team-name" style="text-align: center">
-        <h2><%= key %></h2>
+        <h2><strong><%= key %></strong></h2>
+        <h5><%= team.discord_name %></h5>
+        <hr>
       </div>
-      <div class="d-flex row align-items-center">
-        <div class="transfers-out col-6">
+      <div class="d-flex row align-items-center justify-content-center">
+        <div class="transfers-out col-5">
+          <h5 style="text-align:center">Out</h5>
           <% count.times do |i| %>
             <% player = Player.find(value[:out][i - 1]) %>
             <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@gameweek.to_s], gameweek: @gameweek  %>
           <% end %>
         </div>
-        <div class="transfers-in col-6">
+        <div class="transfers-in col-5">
+          <h5 style="text-align:center">In</h5>
           <% count.times do |i| %>
             <% player = Player.find(value[:in][i - 1]) %>
             <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@gameweek.to_s], gameweek: @gameweek  %>
