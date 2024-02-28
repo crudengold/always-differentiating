@@ -3,9 +3,9 @@
   <% @transfers.each do |key, value| %>
     <% team = Fplteam.find_by(entry_name: key) %>
     <% count = value[:out].count %>
-    <div class="transfer-team col-md-5" style="border-radius: 5px; background-color: #69b578; padding: 20px; margin: 10px;">
+    <div class="transfer-team col-md-5" style="border-radius: 5px; background-color: #69b578; padding: 20px; margin: 10px; box-shadow: 2px 2px grey">
       <div class="team-name" style="text-align: center">
-        <h3><strong><%= key %></strong></h3>
+        <h4><strong><%= key %></strong></h4>
         <h5><%= team.discord_name %></h5>
         <hr>
       </div>
