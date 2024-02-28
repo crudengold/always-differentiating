@@ -138,6 +138,10 @@ h3 {
   .players {
     width: 50%;
   }
+
+  .tabs-underlined .tab-underlined {
+    font-size: 80%;
+  }
 }
 
 .tabs-underlined {
