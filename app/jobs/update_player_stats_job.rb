@@ -41,7 +41,7 @@ class UpdatePlayerStatsJob < ApplicationJob
           new_player.team = player["team"]
           new_player.total_points = player["total_points"]
           new_player.shirt = player["team_code"]
-          new_player.past_ownership_stats[gameweek.to_s] = player["selected_by_percent"]
+          new_player.past_ownership_stats[gameweek.to_s] = player["selected_by_percent"].to_f
           new_player.save
           puts "#{new_player.web_name} added\n"
           # SelectedByStat.create!(
@@ -53,7 +53,7 @@ class UpdatePlayerStatsJob < ApplicationJob
         else
           player_record = Player.find_by(fpl_id: player["id"])
           player_record.total_points = player["total_points"]
-          player_record.past_ownership_stats[gameweek.to_s] = player["selected_by_percent"]
+          player_record.past_ownership_stats[gameweek.to_s] = player["selected_by_percent"].to_f
           player_record.save!
           # SelectedByStat.create!(
           #   gameweek: gameweek,

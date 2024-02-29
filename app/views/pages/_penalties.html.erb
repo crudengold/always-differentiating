@@ -12,7 +12,7 @@
       <a href="#" data-penalties-clipboard-target="copyButton" data-action="penalties-clipboard#penaltiesList" style="color: blue; text-decoration: underline">Click to copy these to clipboard</a>
       <% penalty_players.each do |player_id| %>
         <div class="penalty-card" data-penalties-clipboard-target="player">
-          <h5><strong><%= Player.find(player_id).web_name %> (<%= Player.find(player_id).past_ownership_stats[gameweek] %>%)</strong></h5>
+          <h5><strong><%= Player.find(player_id).web_name %> (<%= Player.find(player_id).past_ownership_stats[gameweek.to_s] %>%)</strong></h5>
           <% penalties.each do |penalty| %>
             <% if penalty.player_id == player_id %>
               <p><%= penalty.fplteam.entry_name %> – <%= penalty.fplteam.discord_name %></p>
