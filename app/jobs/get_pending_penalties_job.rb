@@ -20,8 +20,8 @@ class GetPendingPenaltiesJob < ApplicationJob
     # illegal_players = SelectedByStat.where("selected_by > 15 AND gameweek = ?", gameweek)
     illegal_players = {}
     Player.all.each do |player|
-      if !player.past_ownership_stats["23"].nil? && player.past_ownership_stats["23"] > 10
-        illegal_players[player] = player.past_ownership_stats["23"]
+      if !player.past_ownership_stats[gameweek.to_s].nil? && player.past_ownership_stats[gameweek.to_s] >= 15
+        illegal_players[player] = player.past_ownership_stats[gameweek.to_s]
       end
     end
     illegal_players = illegal_players.sort_by {|_key, value| value}.reverse
