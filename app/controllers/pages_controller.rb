@@ -45,6 +45,10 @@ class PagesController < ApplicationController
     @gameweek = get_gameweek
   end
 
+  # There’s quite a lot of logic in this controller. Generally it’s seen as good practice to have “thin”
+  # controllers and put the logic elsewhere—the model or a service object, generally. This is especially true
+  # if it’s logic that might be helpful elsewhere in the application. It also helps keept things testable.
+
   def position(num)
     # converts the element type number into a position
     if num == 1
@@ -70,6 +74,8 @@ class PagesController < ApplicationController
     end
   end
 
+  # You’re getting a subset of Players here, so this should probably be a scope on Player. See my comment over
+  # there about a JSON column—that would make it easier. Otherwise, it could just be a method on Player.
   def get_illegals(gameweek)
     illegal_players = {}
     Player.all.each do |player|
@@ -77,6 +83,8 @@ class PagesController < ApplicationController
         illegal_players[player] = player.past_ownership_stats[gameweek.to_s]
       end
     end
+    # Generally you don’t use “return” in Ruby unless you’re returning _early_ from a method. Otherwise, just
+    # have the last line of the method be the return value on its own.
     return illegal_players
   end
 
@@ -89,6 +97,9 @@ class PagesController < ApplicationController
     # add team to transfers hash with empty hash as value
       team_name = team.entry_name
       transfers[team_name] = {in: [], out: []}
+      # I’m being super picky, but generally I’d avoid these kinds of comments that just say what the code is doing.
+      # Your code should be clear enough (and your variables well-named enough) that it’s fairly obvious. And I would
+      # say that’s the case here.
       # get last week's picks
       last_week = team.picks.where("gameweek = ?", gameweek - 1)
       # get this week's picks
@@ -103,10 +114,12 @@ class PagesController < ApplicationController
     # if a player is in this week's picks but not last week's, add to team hash as value
       end
       this_week.each do |pick|
-        if last_week.where("player_id = ?", pick.player_id).empty?
+        if last_week.where("player_id = ?", pick.player_id).empty? # Normally go for the cleaner last_week.exists?(player_id: pick.player_id)
           transfers[team_name][:in] << pick.player_id
         end
       end
+      # In fact, I think the 5 lines above could be done something like this (though I’ve not tested it, this likely needs refining.
+      # transfers[team_name][:in] = this_week.filter { |p| last_week.exists?(player_id: p.player_id) }
     end
     # return transfers hash
     return transfers
