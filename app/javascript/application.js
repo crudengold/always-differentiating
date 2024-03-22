@@ -9,3 +9,8 @@ window.Stimulus   = application
 
 export { application }
 import "controllers"
+import "bootstrap";
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  // Your code to start up your application
+});

@@ -57,6 +57,36 @@
         <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
       </div>
       <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
+      <div class="d-flex justify-content-center">
+        <a href="#" style="text-align: center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Learn more about this site
+        </a>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">About Always Differentiating</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Always Differentiating is a Fantasy Premier League league, where the main rule is: you're not allowed to pick the most popular FPL players.</p>
+                <p>Initially, this was tricky, because every week, each team in the league needed to be manually checked for 'illegal' players.</p>
+                <p>What this site does is:</p>
+                <ul>
+                  <li><strong>Grabs a list of the illegal players:</strong> Each gameweek, a definitive list of the illegal players is pulled from the FPL API. We do this because the numbers constantly change and shift, and we want all managers to be working from the same data. The list is pulled 24 hours before the FPL deadline. This is because we have managers in West Coast USA and managers in Australia, so this way nobody can be caught out by numbers shifting in the middle of the night.</li>
+                  <li><strong>Checks teams for illegal players:</strong> The site then checks each manager's team for any illegal players, and generates warnings for that manager. The manager must transfer out their illegal player or incur a points penalty.</li>
+                  <li><strong>Logs and tracks penalties:</strong> If a manager fails to transfer an illegal player, or transfers an illegal player in, they incur a points penalty. The site shows any penalties incurred after the FPL deadline and tracks them in a points table.</li>
+                  <li><strong>Shows transfers for the gameweek:</strong> Under the 'transfers' tab, you can see who a manager has transferred in/out for the gameweek. This was to provide an extra level of visibility (mainly in the early stages when I wanted to make sure my code was running properly!)</li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
