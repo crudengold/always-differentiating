@@ -5,6 +5,13 @@ class UpdatePlayerStatsJob < ApplicationJob
 
   def perform(*args)
     # fpl all data api
+    # When dealing with an API, I think it’s generally nice to wrap it in a single object.
+    # For example, you’d have a single LeagueAPI object, and any communication you want to
+    # do with the API happens through that. It keeps all the logic in a single place and
+    # makes refactoring and changes much simpler. It also makes your jobs simpler. I’d advise
+    # to aim for jobs that have almost no logic in—they just trigger logic that’s held elsewhere.
+    # Partly this makes the logic easier to share, but mostly it makes it _much_ easier
+    # to test.
     general_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
     user_serialized = URI.open(general_url).read
     all_data = JSON.parse(user_serialized)
