@@ -1,3 +1,5 @@
+require_relative "api_json"
+
 class Gameweek
   attr_reader :gw_num, :deadline
   def initialize(api_data, time_relative)
@@ -36,18 +38,20 @@ class Gameweek
   def transfers
     transfers = {}
     Fplteam.all.each do |team|
-      team_name = team.entry_name
-      transfers[team_name] = {in: [], out: []}
-      last_week = team.picks.where("gameweek = ?", @gw_num - 1)
+      url = "https://fantasy.premierleague.com/api/entry/#{team.entry}/event/#{@gw_num - 1}/picks/"
+      last_week_api_data = ApiJson.new(url).get
+      transfers[team.entry_name] = {in: [], out: []}
+      last_week = team.picks.where("gameweek = ?", @gw_num - (team.free_hit?(last_week_api_data) ? 2 : 1))
+      raise
       this_week = team.picks.where("gameweek = ?", @gw_num)
       last_week.each do |pick|
-        if this_week.where("player_id = ?", pick.player_id).empty?
-          transfers[team_name][:out] << pick.player_id
+        if !this_week.exists?(player_id: pick.player_id)
+          transfers[team.entry_name][:out] << pick.player_id
         end
       end
       this_week.each do |pick|
-        if last_week.where("player_id = ?", pick.player_id).empty?
-          transfers[team_name][:in] << pick.player_id
+        if !last_week.exists?(player_id: pick.player_id)
+          transfers[team.entry_name][:in] << pick.player_id
         end
       end
     end

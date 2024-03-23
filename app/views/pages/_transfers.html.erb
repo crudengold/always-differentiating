@@ -2,11 +2,13 @@
   <h2 style="margin-top: 25px; text-align: center"><strong>Gameweek <%= gameweek %> transfers</strong></h2>
   <% @transfers.each do |key, value| %>
     <% team = Fplteam.find_by(entry_name: key) %>
+    <% team_api_data = ApiJson.new("https://fantasy.premierleague.com/api/entry/#{team.entry}/event/#{gameweek}/picks/").get %>
     <% count = value[:out].count %>
     <div class="transfer-team col-md-5" style="border-radius: 5px; background-color: #69b578; padding: 20px; margin: 10px;">
       <div class="team-name" style="text-align: center">
         <h3><strong><%= key %></strong></h3>
         <h5><%= team.discord_name %></h5>
+        <p><%= team.free_hit?(team_api_data) ? "FREE HIT" : "" %></p>
         <hr>
       </div>
       <div class="d-flex row justify-content-center">
