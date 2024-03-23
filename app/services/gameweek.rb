@@ -1,0 +1,56 @@
+class Gameweek
+  attr_reader :gw_num, :deadline
+  def initialize(api_data, time_relative)
+    @all_gameweeks = api_data["events"]
+    @time_relative = time_relative
+    @gw_num = get_number
+    @deadline = get_deadline
+  end
+
+  def get_number
+    @all_gameweeks.each do |num|
+      if num["is_#{@time_relative}"] == true
+        return num["id"]
+      end
+    end
+  end
+
+  def get_deadline
+    @all_gameweeks.each do |num|
+      if num["is_#{@time_relative}"] == true
+        return Time.zone.parse(num["deadline_time"]).utc
+      end
+    end
+  end
+
+  def illegal_players
+    illegal_players = {}
+    Player.all.each do |player|
+      if !player.past_ownership_stats[@gw_num.to_s].nil? && player.past_ownership_stats[@gw_num.to_s] > 10
+        illegal_players[player] = player.past_ownership_stats[@gw_num.to_s]
+      end
+    end
+    illegal_players
+  end
+
+  def transfers
+    transfers = {}
+    Fplteam.all.each do |team|
+      team_name = team.entry_name
+      transfers[team_name] = {in: [], out: []}
+      last_week = team.picks.where("gameweek = ?", @gw_num - 1)
+      this_week = team.picks.where("gameweek = ?", @gw_num)
+      last_week.each do |pick|
+        if this_week.where("player_id = ?", pick.player_id).empty?
+          transfers[team_name][:out] << pick.player_id
+        end
+      end
+      this_week.each do |pick|
+        if last_week.where("player_id = ?", pick.player_id).empty?
+          transfers[team_name][:in] << pick.player_id
+        end
+      end
+    end
+    transfers
+  end
+end
