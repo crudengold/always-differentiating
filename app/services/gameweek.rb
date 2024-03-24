@@ -38,11 +38,8 @@ class Gameweek
   def transfers
     transfers = {}
     Fplteam.all.each do |team|
-      url = "https://fantasy.premierleague.com/api/entry/#{team.entry}/event/#{@gw_num - 1}/picks/"
-      last_week_api_data = ApiJson.new(url).get
       transfers[team.entry_name] = {in: [], out: []}
-      last_week = team.picks.where("gameweek = ?", @gw_num - (team.free_hit?(last_week_api_data) ? 2 : 1))
-      raise
+      last_week = team.picks.where("gameweek = ?", @gw_num - (team.free_hit?(team.entry, @gw_num - 1) ? 2 : 1))
       this_week = team.picks.where("gameweek = ?", @gw_num)
       last_week.each do |pick|
         if !this_week.exists?(player_id: pick.player_id)

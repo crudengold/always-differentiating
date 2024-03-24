@@ -58,7 +58,7 @@ class UpdatePenaltiesJob < ApplicationJob
       # if the selected by stat for that pick is 10 or over, but less than 15, and there is no pick for that player for the previous gameweek
       if pick.player.past_ownership_stats[gameweek.to_s] < 15 &&
          pick.player.past_ownership_stats[gameweek.to_s] >= 10 &&
-         Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - 1)).nil?
+         Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - (pick.fplteam.free_hit?(pick.fplteam.entry, gameweek - 1) ? 2 : 1))).nil?
         # create a penalty
         # set the points deducted to 4
         # set the fplteam to the pick's fplteam
