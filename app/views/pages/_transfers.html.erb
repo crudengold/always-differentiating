@@ -7,6 +7,7 @@
       <div class="team-name" style="text-align: center">
         <h3><strong><%= key %></strong></h3>
         <h5><%= team.discord_name %></h5>
+        <p><%= team.free_hit?(team.entry, gameweek) ? "FREE HIT" : "" %></p>
         <hr>
       </div>
       <div class="d-flex row justify-content-center">
