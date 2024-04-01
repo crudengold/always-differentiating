@@ -20,7 +20,7 @@ class Gameweek
   def get_deadline
     @all_gameweeks.each do |num|
       if num["is_#{@time_relative}"] == true
-        return Time.zone.parse(num["deadline_time"]).utc
+        return Time.zone.parse(num["deadline_time"]).in_time_zone("London")
       end
     end
   end

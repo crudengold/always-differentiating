@@ -19,7 +19,7 @@ class GetCurrentPicksJob < ApplicationJob
     end
     all_data["events"].each do |num|
       if num["is_next"] == true
-        next_deadline = Time.zone.parse(num["deadline_time"]).utc
+        next_deadline = Time.zone.parse(num["deadline_time"]).in_time_zone("London")
         next_deadline_minus_one = next_deadline - 24.hours
       end
     end

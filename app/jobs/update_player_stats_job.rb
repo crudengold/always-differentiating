@@ -16,7 +16,7 @@ class UpdatePlayerStatsJob < ApplicationJob
     all_data["events"].each do |num|
       if num["is_next"] == true
         gameweek = num["id"]
-        deadline = Time.zone.parse(num["deadline_time"]).utc
+        deadline = Time.zone.parse(num["deadline_time"]).in_time_zone("London")
       end
     end
     # new version below, commenting while i work this out
