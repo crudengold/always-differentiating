@@ -19,10 +19,10 @@ class GetCurrentPicksJob < ApplicationJob
     end
     all_data["events"].each do |num|
       if num["is_next"] == true
-        next_deadline = Time.zone.parse(num["deadline_time"]).utc
+        next_deadline = Time.zone.parse(num["deadline_time"]).in_time_zone("London")
+        next_deadline_minus_one = next_deadline - 24.hours
       end
     end
-    next_deadline_minus_one = next_deadline - 24.hours
     # go through every fplteam
     unless Pick.last.gameweek == gameweek
       puts "getting picks for gameweek #{gameweek}"
@@ -45,7 +45,9 @@ class GetCurrentPicksJob < ApplicationJob
         end
       end
     end
-    UpdatePlayerStatsJob.set(wait_until: next_deadline_minus_one).perform_later
+    unless gameweek == 38
+      UpdatePlayerStatsJob.set(wait_until: next_deadline_minus_one).perform_later
+    end
     UpdatePenaltiesJob.perform_now
     UpdateTeamScoresJob.set(wait: 1.minute).perform_later
   end
