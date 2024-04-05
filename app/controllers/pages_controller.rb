@@ -17,7 +17,7 @@ class PagesController < ApplicationController
     @gameweek = next_gw.gw_num
     @deadline = next_gw.deadline
     @deadline_minus_one = @deadline - 24.hours
-    @update_time = Player.last.updated_at
+    @update_time = (Player.last.updated_at).in_time_zone("London")
     @illegal_players = next_gw.illegal_players
     @illegal_players = @illegal_players.sort_by {|_key, value| value}.reverse.to_h
     @last_week_illegal_players = current_gw.illegal_players
