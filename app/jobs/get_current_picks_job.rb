@@ -8,7 +8,7 @@ class GetCurrentPicksJob < ApplicationJob
   def perform(*args)
     all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
 
-    gameweek = Gameweek.new(all_data, "current").gw
+    gameweek = Gameweek.new(all_data, "current").gw_num
     next_gameweek = Gameweek.new(all_data, "next")
     next_deadline = next_gameweek.deadline
     next_deadline_minus_one = next_deadline - 24.hours
