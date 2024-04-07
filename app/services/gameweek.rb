@@ -41,16 +41,8 @@ class Gameweek
       transfers[team.entry_name] = {in: [], out: []}
       last_week = team.picks.where("gameweek = ?", @gw_num - (team.free_hit?(team.entry, @gw_num - 1) ? 2 : 1))
       this_week = team.picks.where("gameweek = ?", @gw_num)
-      last_week.each do |pick|
-        if !this_week.exists?(player_id: pick.player_id)
-          transfers[team.entry_name][:out] << pick.player_id
-        end
-      end
-      this_week.each do |pick|
-        if !last_week.exists?(player_id: pick.player_id)
-          transfers[team.entry_name][:in] << pick.player_id
-        end
-      end
+      transfers[team.entry_name][:out] = last_week.filter { |pick| !this_week.exists?(player_id: pick.player_id) }.pluck(:player_id)
+      transfers[team.entry_name][:in] = this_week.filter { |pick| !last_week.exists?(player_id: pick.player_id) }.pluck(:player_id)
     end
     transfers
   end
