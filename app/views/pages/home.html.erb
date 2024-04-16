@@ -7,8 +7,6 @@
           <div>
             <h4>Screenshot for <strong>Gameweek <%= @gameweek %></strong></h4>
             <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
-            <%# <a href="#" style="font-size: 14px; text-decoration: none; color: white" data-players-clipboard-target="copyPlayersButton" data-action="players-clipboard#illegalList">Click here to copy screenshot to clipboard</a>
-            <p style="font-size: 10px">(this does not work in Firefox)</p> %>
           </div>
           <div class="p-1 bg-white" style="border-radius: 5px">
             <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
@@ -44,8 +42,6 @@
         <div>
           <h4>Screenshot for <strong>Gameweek <%= @gameweek- 1 %></strong></h4>
           <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
-          <%# <a href="#" style="font-size: 14px; text-decoration: none; color: white" data-players-clipboard-target="copyPlayersButton" data-action="players-clipboard#illegalList">Click here to copy screenshot to clipboard</a>
-          <p style="font-size: 10px">(this does not work in Firefox)</p> %>
         </div>
         <div class="p-1 bg-white" style="border-radius: 5px">
           <%= render 'players', illegal_players: @last_week_illegal_players, percentage: 10 %>

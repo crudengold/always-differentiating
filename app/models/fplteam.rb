@@ -1,3 +1,5 @@
+require_relative "../services/api_json.rb"
+
 class Fplteam < ApplicationRecord
   has_many :players, through: :picks
   has_many :picks
@@ -11,23 +13,28 @@ class Fplteam < ApplicationRecord
 
   def self.create_picks_for_gameweek(gameweek)
     Fplteam.all.each do |manager|
-      puts "getting picks for #{manager.entry_name}"
-      manager_url = "https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/#{gameweek}/picks/"
-      user_serialized = URI.open(manager_url).read
-      all_data = JSON.parse(user_serialized)
-      puts "API accessed and loaded"
-      # get their picks
-      all_data["picks"].each do |player|
-        player_log = Player.find_by(fpl_id: player["element"])
+      picks = ApiJson.new("https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/#{gameweek}/picks/").get["picks"]
+      picks.each do |pick|
+        pick_data = Player.find_by(fpl_id: pick["element"])
         # create a new pick for each player
-        pick = Pick.new
-        pick.player = player_log
-        pick.fplteam = manager
-        pick.gameweek = gameweek
-        pick.save
-        puts "pick created for #{player_log.web_name}!"
+        pick = Pick.create(player: pick_data, fplteam: manager, gameweek: gameweek)
       end
     end
+  end
+
+  def update_penalties
+    total = 0
+    unless Penalty.where(fplteam: self, status: "confirmed").empty?
+      Penalty.where(fplteam: self, status: "confirmed").each {|penalty| total += penalty.points_deducted}
+    end
+    self.deductions = total
+    self.save
+  end
+
+  def update_scores(team_total)
+    self.total = team_total
+    self.total_after_deductions = self.total - self.deductions
+    self.save
   end
 
 end
