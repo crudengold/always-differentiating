@@ -1,3 +1,9 @@
-<h1>Hi admin</h1>
+<div class="column">
+  <h1>Hi admin</h1>
+  <%= simple_form_for(current_user) do |f| %>
+    <%= f.input :photo, as: :file %>
+    <%= f.button :submit %>
+  <% end %>
 
-<h4><%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %></h4>
+  <h4><%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %></h4>
+</div>
