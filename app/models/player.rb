@@ -30,4 +30,16 @@ class Player < ApplicationRecord
     player_record.save!
     puts "stat created for #{player_record.web_name}\n"
   end
+
+  def self.illegal_players(gameweek)
+    players = {}
+
+    all.each do |player|
+      if !player.past_ownership_stats[gameweek.to_s].nil? && player.past_ownership_stats[gameweek.to_s] >= 15
+        players[player] = player.past_ownership_stats[gameweek.to_s]
+      end
+    end
+
+    players
+  end
 end

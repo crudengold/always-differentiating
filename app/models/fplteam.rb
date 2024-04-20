@@ -11,6 +11,10 @@ class Fplteam < ApplicationRecord
     api_data["active_chip"] == "freehit"
   end
 
+  def self.last_weeks_free_hitters(gameweek)
+    all.select { |fplteam| fplteam.free_hit?(fplteam.entry, gameweek - 1) }
+  end
+
   def self.create_picks_for_gameweek(gameweek)
     Fplteam.all.each do |manager|
       picks = ApiJson.new("https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/#{gameweek}/picks/").get["picks"]

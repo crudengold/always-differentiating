@@ -38,4 +38,30 @@ class Penalty < ApplicationRecord
     self.points_deducted += gameweek_score
     self.save
   end
+
+  def self.create_for_non_free_hitters(gameweek, illegal_players, last_weeks_free_hitters)
+    Pick.where(gameweek: gameweek - 1).each do |pick|
+      if illegal_players.include?(pick.player) && !last_weeks_free_hitters.include?(pick.fplteam)
+        create(player: pick.player, fplteam: pick.fplteam, gameweek: gameweek)
+      end
+    end
+  end
+
+  def self.create_for_free_hitters(gameweek, illegal_players, last_weeks_free_hitters)
+    Pick.where(gameweek: gameweek - 2).each do |pick|
+      if illegal_players.include?(pick.player) && last_weeks_free_hitters.include?(pick.fplteam)
+        create(player: pick.player, fplteam: pick.fplteam, gameweek: gameweek)
+      end
+    end
+  end
+
+  def self.create_for_previous_warnings(gameweek, last_weeks_free_hitters)
+    last_weeks_free_hitters.each do |fplteam|
+      where(fplteam: fplteam, gameweek: gameweek - 1).each do |warning|
+        unless where(player: warning.player, fplteam: warning.fplteam, gameweek: gameweek).exists?
+          create(player: warning.player, fplteam: warning.fplteam, gameweek: gameweek)
+        end
+      end
+    end
+  end
 end
