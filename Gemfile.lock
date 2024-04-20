@@ -94,6 +94,10 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    cloudinary (2.0.2)
+      faraday (>= 2.0.1, < 3.0.0)
+      faraday-follow_redirects (~> 0.3.0)
+      faraday-multipart (~> 1.0, >= 1.0.4)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
@@ -114,12 +118,28 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
+    dotenv (3.1.0)
+    dotenv-rails (3.1.0)
+      dotenv (= 3.1.0)
+      railties (>= 6.1)
     drb (2.2.0)
       ruby2_keywords
     error_highlight (0.5.1)
     erubi (1.12.0)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-follow_redirects (0.3.0)
+      faraday (>= 1, < 3)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hotwire-rails (0.1.3)
+      rails (>= 6.0.0)
+      stimulus-rails
+      turbo-rails
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.3)
@@ -146,7 +166,10 @@ GEM
     mini_mime (1.1.5)
     minitest (5.20.0)
     msgpack (1.7.2)
+    multipart-post (2.4.0)
     mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.5)
       date
       net-protocol
@@ -248,6 +271,9 @@ GEM
       redis (>= 4.1.0)
     sidekiq-failures (1.0.4)
       sidekiq (>= 4.0.0)
+    simple_form (5.3.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -265,6 +291,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (0.13.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -288,11 +315,14 @@ DEPENDENCIES
   bootsnap
   byebug
   capybara
+  cloudinary
   daemons
   debug
   delayed_job_active_record
   devise
+  dotenv-rails
   error_highlight (>= 0.4.0)
+  hotwire-rails
   importmap-rails
   jbuilder
   pg (~> 1.1)
@@ -304,6 +334,7 @@ DEPENDENCIES
   selenium-webdriver
   sidekiq (< 7)
   sidekiq-failures (~> 1.0)
+  simple_form
   sprockets-rails
   stimulus-rails
   turbo-rails
