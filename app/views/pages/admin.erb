@@ -9,4 +9,7 @@
   <% end %>
 
   <h4><%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %></h4>
+  <% Sidekiq::ScheduledSet.new.each do |job| %>
+    <p><%= job.args[0]["job_class"] %>, scheduled at <%= job.args[0]["scheduled_at"] %>
+  <% end %>
 </div>
