@@ -163,3 +163,29 @@ h3 {
   opacity: 1;
   border-bottom: 3px solid #555555;
 }
+
+.footer {
+  background: #254D32;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0px 50px;
+  color: rgba(0,0,0,0.3);
+  margin-top: 50px
+}
+
+.alert {
+  color: white;
+  margin-top: 17px;
+}
+
+.notice {
+  color: white;
+  margin-top: 17px;
+}
+
+.footer-copyright {
+  color: white;
+  text-align: right;
+}
