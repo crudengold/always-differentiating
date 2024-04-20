@@ -8,6 +8,7 @@ require_relative "../services/gameweek.rb"
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:admin]
 
   def home
     all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
@@ -38,5 +39,8 @@ class PagesController < ApplicationController
     all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
     @gameweek = Gameweek.new(all_data, "current").gw_num
     @transfers = Gameweek.new(all_data, "current").transfers
+  end
+
+  def admin
   end
 end

@@ -82,3 +82,5 @@ gem "devise"
 gem "pg", "~> 1.1"
 
 gem "byebug"
+
+gem 'hotwire-rails'
