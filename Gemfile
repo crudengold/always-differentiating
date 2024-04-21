@@ -89,3 +89,5 @@ gem 'hotwire-rails'
 gem "cloudinary"
 
 gem 'simple_form'
+
+gem 'sassc-rails'
