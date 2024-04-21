@@ -1,0 +1,48 @@
+<div class="column">
+
+  <h1 style="text-align: center; margin: 20px">League rules</h1>
+  <div id="rules-headline">
+    <h5>The main rule to remember is: <strong>you can only buy players with an ownership stat of under 10%, and you have to get rid of them when they go over 15%</strong></h5>
+  </div>
+
+  <p>A player's ownership stat is called TSB% in the FPL app. This stands for Teams Selected By.</p>
+
+  <p>Every gameweek, 24 hours before the deadline, a 'screenshot' will be taken of every player's ownership stats. These are the numbers we go off for the week. The screenshot will be available on the main page of this site, but we will also share it on Discord</p>
+
+  <p>If you currently own a player whose ownership stat is over 15%, you will be prompted on Discord to transfer them out before the deadline.</p>
+
+  <p>If you do not transfer out an illegal player, or you transfer in an illegal player, you will get a points deduction of 4 points, plus whatever that player scores for the week</p>
+
+  <dt class="question">I don't understand the under 10%, over 15% thing. What about players between those numbers?</dt>
+  <dd class="answer">Say you transfer in a player at 6%. He then has a big week and his ownership subsequently goes up to 13%. You're allowed to continue owning him (unless he tips over 15%), but now others cannot buy him. This is an added strategic element.</dd>
+  <dt class="question">I have/transferred in an illegal player, but he's on my bench. As long as he doesn't come on, is that okay?</dt>
+  <dd class="answer">Nope, sorry, you will still get a penalty! The rules cover all 15 players in your squad.</dd>
+  <dt class="question">How do chips work?</dt>
+  <p>Basically the same as the normal game. You can use them whenever you like.</p>
+  <p>The only one that gets tricky is the Free Hit.</p>
+  <p>If you use your Free Hit chip, then all players you bring in that week must have been under 10% in the screenshot (though you can of course hold onto any sub-15% players you already own)</p>
+  <p>Also, if immediately before you Free Hit, one of your normal players slips above 15%, you must get rid of them once your team is back to normal.</p>
+  <dt class="question">What if I forget to transfer an illegal player out, and then their stat drops below 15%? Can I keep them?</dt>
+  <p>That player still needs to go. As soon as you start recieving penalties for a particular player, you will continue to recieve penalties for them until their stat drops below 10%</p>
+  <dt class="question">I transferred in a player at under 10%, but in the screenshot he has gone over 10%. Do I get a penalty?</dt>
+  <p>Tough luck, I'm afraid. The only numbers we go off are the ones in the screenshot 24 hours before the deadline. This is to ensure everyone is going by the same numbers and nobody has an advantage.</p>
+</div>
+
+<h3>Feedback</h3>
+<p>If you have suggestions or feedback on the rules or this website, please feel free to share here!</p>
+
+<%= form_with(url: feedbacks_path, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :feedback %>
+    <%= form.text_area :feedback %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
