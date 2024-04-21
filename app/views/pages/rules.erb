@@ -26,23 +26,23 @@
   <p>That player still needs to go. As soon as you start recieving penalties for a particular player, you will continue to recieve penalties for them until their stat drops below 10%</p>
   <dt class="question">I transferred in a player at under 10%, but in the screenshot he has gone over 10%. Do I get a penalty?</dt>
   <p>Tough luck, I'm afraid. The only numbers we go off are the ones in the screenshot 24 hours before the deadline. This is to ensure everyone is going by the same numbers and nobody has an advantage.</p>
+
+  <h3>Feedback</h3>
+  <p>If you have suggestions or feedback on the rules or this website, please feel free to share here!</p>
+
+  <%= form_with(model: Feedback.new, local: true) do |form| %>
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :feedback %>
+      <%= form.text_area :feedback %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
 </div>
-
-<h3>Feedback</h3>
-<p>If you have suggestions or feedback on the rules or this website, please feel free to share here!</p>
-
-<%= form_with(url: feedbacks_path, local: true) do |form| %>
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :feedback %>
-    <%= form.text_area :feedback %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>

@@ -1,5 +1,6 @@
 class FeedbacksController < ApplicationController
   def create
+    Rails.logger.debug params.inspect
     @feedback = Feedback.new(feedback_params)
 
     if @feedback.save
