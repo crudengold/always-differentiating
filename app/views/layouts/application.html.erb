@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AlwaysDifferentiating</title>
+    <title>Always Differentiating</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
   </head>
 
   <body>
@@ -22,7 +23,13 @@
     <div class="container d-flex justify-content-center mt-2" style="width:100%;">
       <%= yield %>
     </div>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="footer">
+        <p class="alert" style="text-align: center"><%= alert %></p>
+        <p class="notice" style="text-align: center"><%= notice %></p>
+      <div class="footer-copyright">
+        Made with ❤️ by Alex Cruden
+      </div>
+    </div>
+
   </body>
 </html>

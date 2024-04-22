@@ -1,0 +1,21 @@
+.main-box {
+  background: #69B578;
+  padding: 20px;
+  box-shadow: 2px 2px grey;
+  border-radius: 5px;
+}
+
+@media (max-width: 576px) {
+  .main-box {
+    max-width: 100%;
+    font-size: 80%;
+  }
+}
+
+
+.players {
+
+  background-color: white;
+  padding: 5px;
+  margin: 10px;
+}

@@ -49,6 +49,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
   gem 'rspec-rails', '~> 5.0'
   gem 'factory_bot_rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -76,10 +77,18 @@ gem 'delayed_job_active_record'
 
 gem "daemons"
 
-gem "sidekiq", "< 7"
+gem "sidekiq", "< 8"
 gem "sidekiq-failures", "~> 1.0"
 gem "devise"
 
 gem "pg", "~> 1.1"
 
 gem "byebug"
+
+gem 'hotwire-rails'
+
+gem "cloudinary"
+
+gem 'simple_form'
+
+gem 'sassc-rails'
