@@ -27,6 +27,7 @@
           </ul>
       <% end %>
     </div>
+    <hr>
     <h2>Most recent penalties</h2>
     <div id="penalties">
       <% Penalty.where(status:"confirmed").last(3).each do |penalty| %>
