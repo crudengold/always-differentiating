@@ -42,6 +42,9 @@ class PagesController < ApplicationController
   end
 
   def admin
+    @jobs = Sidekiq::ScheduledSet.new
+    @penalties = Penalty.where("status = 'confirmed'").last(3).sort_by(&:gameweek).reverse
+    @feedback = Feedback.last(3)
   end
 
   def rules
