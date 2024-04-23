@@ -2,7 +2,7 @@ class PenaltiesController < ApplicationController
   before_action :set_penalty, only: [:show, :edit, :update, :destroy]
 
   def index
-    @penalties = Penalty.where(status: "confirmed")
+    @penalties = Penalty.where(status: "confirmed").sort_by(&:gameweek).reverse
   end
 
   def show
