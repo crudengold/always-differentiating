@@ -1,0 +1,13 @@
+<h1>All penalties</h1>
+<div id="penalties">
+  <ul>
+  <% @penalties.each do |penalty| %>
+    <li><strong><%= penalty.fplteam.player_name %> (<%= penalty.fplteam.discord_name %>)<%= link_to "(Edit)", edit_penalty_path(penalty) %></strong></li>
+    <ul>
+      <li><%= penalty.player.web_name %></li>
+      <li>Gameweek <%= penalty.gameweek %></li>
+      <li><%= penalty.points_deducted %> points deducted</li>
+    </ul>
+  <% end %>
+  </ul>
+</div>

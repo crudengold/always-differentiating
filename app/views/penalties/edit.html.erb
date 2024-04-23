@@ -1,0 +1,16 @@
+<div>
+
+  <%= form_with(model: @penalty, local: true) do |form| %>
+    <div class="field">
+      <%= form.label :points_deducted %>
+      <%= form.number_field :points_deducted, min: 0 %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>
+
+<%= button_to 'Delete penalty', penalty_path(@penalty), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', penalties_path %>

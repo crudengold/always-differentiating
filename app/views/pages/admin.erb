@@ -30,16 +30,16 @@
     <hr>
     <h2>Most recent penalties</h2>
     <div id="penalties">
+      <ul>
       <% Penalty.where(status:"confirmed").last(3).each do |penalty| %>
+        <li><strong><%= penalty.fplteam.player_name %> (<%= penalty.fplteam.discord_name %>)</strong></li>
         <ul>
-          <li><strong><%= penalty.fplteam.player_name %> (<%= penalty.fplteam.discord_name %>)</strong></li>
-          <ul>
-            <li><%= penalty.player.web_name %></li>
-            <li>Gameweek <%= penalty.gameweek %></li>
-            <li><%= penalty.points_deducted %> points deducted</li>
-          </ul>
+          <li><%= penalty.player.web_name %></li>
+          <li>Gameweek <%= penalty.gameweek %></li>
+          <li><%= penalty.points_deducted %> points deducted</li>
         </ul>
       <% end %>
+      </ul>
     </div>
   </div>
 </div>
