@@ -20,7 +20,7 @@
     <h2 style="margin-top: 15px">Queued jobs</h2>
     <div id="jobs">
       <ul>
-      <% Sidekiq::ScheduledSet.new.each do |job| %>
+      <% @jobs.each do |job| %>
         <li><strong><%= job.args[0]["job_class"] %></strong></li>
           <ul>
             <li><%= Time.zone.parse(job.args[0]["scheduled_at"]).in_time_zone("London").strftime("%A %d %B, %H:%M") %>
@@ -32,7 +32,7 @@
     <h2>Most recent penalties</h2>
     <div id="penalties">
       <ul>
-      <% Penalty.where(status:"confirmed").last(3).each do |penalty| %>
+      <% @penalties.each do |penalty| %>
         <li><strong><%= penalty.fplteam.player_name %> (<%= penalty.fplteam.discord_name %>) <%= link_to "(Edit)", edit_penalty_path(penalty) %></strong></li>
         <ul>
           <li><%= penalty.player.web_name %></li>
@@ -47,7 +47,7 @@
     <div class="recent-feedback">
       <h2>Recent feedback</h2>
       <ul>
-      <% Feedback.last(3).each do |feedback| %>
+      <% @feedback.each do |feedback| %>
         <li><strong><%= feedback.name %></strong></li>
         <ul>
           <li><%= feedback.feedback %></li>
