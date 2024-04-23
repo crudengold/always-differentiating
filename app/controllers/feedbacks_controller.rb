@@ -10,6 +10,12 @@ class FeedbacksController < ApplicationController
     end
   end
 
+  def destroy
+    @feedback = Feedback.find(params[:id])
+    @feedback.destroy
+    redirect_to admin_path, notice: 'Feedback was deleted.'
+  end
+
   private
 
   def feedback_params
