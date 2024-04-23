@@ -1,10 +1,11 @@
 class PenaltiesController < ApplicationController
+  before_action :set_penalty, only: [:show, :edit, :update, :destroy]
+
   def index
     @penalties = Penalty.where(status: "confirmed")
   end
 
   def show
-    @penalty = Penalty.find(params[:id])
   end
 
   def new
@@ -14,34 +15,35 @@ class PenaltiesController < ApplicationController
   def create
     @penalty = Penalty.new(penalty_params)
     if @penalty.save
-      redirect_to @penalty
+      redirect_to penalties_path, notice: "Penalty was successfully created."
     else
       render :new
     end
   end
 
   def edit
-    @penalty = Penalty.find(params[:id])
   end
 
   def update
-    @penalty = Penalty.find(params[:id])
     if @penalty.update(penalty_params)
-      redirect_to @penalty
+      redirect_to penalties_path, notice: "Penalty was successfully updated."
     else
       render :edit
     end
   end
 
   def destroy
-    @penalty = Penalty.find(params[:id])
     @penalty.destroy
     redirect_to penalties_path
   end
 
   private
 
+  def set_penalty
+    @penalty = Penalty.find(params[:id])
+  end
+
   def penalty_params
-    params.require(:penalty).permit(:fplteam, :player, :gameweek, :points_deducted)
+    params.require(:penalty).permit(:fplteam_id, :player_id, :gameweek, :points_deducted, :status)
   end
 end
