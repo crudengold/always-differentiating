@@ -14,3 +14,5 @@ import "bootstrap";
 document.addEventListener("DOMContentLoaded", function(event) {
   // Your code to start up your application
 });
+
+//= require penalties
