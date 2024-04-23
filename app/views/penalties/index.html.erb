@@ -1,6 +1,9 @@
 <div class="column" id="penalties">
-  <h1>All penalties</h1>
-  <%= link_to "New penalty", new_penalty_path, class: "btn btn-primary" %>
+  <h1 style="text-align: center">All penalties</h1>
+  <div class="text-center">
+    <%= link_to "Add a new penalty", new_penalty_path, class: "btn btn-primary" %>
+  </div>
+  <hr>
   <ul>
   <% @penalties.each do |penalty| %>
     <li style="margin-top: 10px"><strong><%= penalty.fplteam.player_name %> (<%= penalty.fplteam.discord_name %>)<%= link_to "(Edit)", edit_penalty_path(penalty) %></strong></li>
