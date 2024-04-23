@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'feedbacks/create'
   get 'users/update'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   get "/transfers", to: "pages#transfers"
   get "/admin", to: "pages#admin"
   get "/penalties", to: "penalties#index"
+  get "/rules", to: "pages#rules"
   resources :penalties
 
   require "sidekiq/web"
@@ -28,4 +30,5 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  resources :feedbacks, only: [:create, :destroy]
 end

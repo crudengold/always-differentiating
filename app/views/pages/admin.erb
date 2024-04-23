@@ -19,13 +19,14 @@
   <div class="column col-7">
     <h2 style="margin-top: 15px">Queued jobs</h2>
     <div id="jobs">
+      <ul>
       <% Sidekiq::ScheduledSet.new.each do |job| %>
-        <ul>
         <li><strong><%= job.args[0]["job_class"] %></strong></li>
           <ul>
             <li><%= Time.zone.parse(job.args[0]["scheduled_at"]).in_time_zone("London").strftime("%A %d %B, %H:%M") %>
           </ul>
       <% end %>
+      </ul>
     </div>
     <hr>
     <h2>Most recent penalties</h2>
@@ -41,6 +42,19 @@
       <% end %>
       </ul>
       <p style="text-align: right"><%= link_to "All penalties", penalties_path %></p>
+    </div>
+    <hr>
+    <div class="recent-feedback">
+      <h2>Recent feedback</h2>
+      <ul>
+      <% Feedback.last(3).each do |feedback| %>
+        <li><strong><%= feedback.name %></strong></li>
+        <ul>
+          <li><%= feedback.feedback %></li>
+        </ul>
+      <% end %>
+      </ul>
+      <%# <p style="text-align: right"><%= link_to "All feedback", feedbacks_path %>
     </div>
   </div>
 </div>

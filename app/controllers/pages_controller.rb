@@ -43,4 +43,7 @@ class PagesController < ApplicationController
 
   def admin
   end
+
+  def rules
+  end
 end
