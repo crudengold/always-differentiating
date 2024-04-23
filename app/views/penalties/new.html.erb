@@ -45,7 +45,7 @@
       <div class="card-body">
         <div class="form-group">
           <%= form.label :status, class: 'form-label' %>
-          <%= form.select :status, ['confirmed', 'pending'], {}, { class: 'form-control' } %>
+          <%= form.select :status, ['confirmed', 'pending'], { selected: 'confirmed'}, { class: 'form-control' } %>
         </div>
       </div>
     </div>
