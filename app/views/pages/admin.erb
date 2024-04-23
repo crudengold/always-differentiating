@@ -1,13 +1,53 @@
-<div class="column">
-  <h1>Hi admin</h1>
-  <% if current_user.photo.attached? %>
-    <%= image_tag current_user.photo, height: 100, width: 100, crop: :fill %>
-  <% end %>
-  <%= simple_form_for(current_user) do |f| %>
-    <%= f.input :photo, as: :file %>
-    <%= f.button :submit %>
-  <% end %>
+<div class="row" style="width: 75%">
 
-  <h4><%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %></h4>
+  <div class="admin-column column col-4 center-content">
+    <h2 style="margin-top: 15px">Hi Alex</h2>
+    <% if current_user.photo.attached? %>
+      <%= image_tag current_user.photo, class: "avatar" %>
+    <% end %>
+    <h5 id="avatar-link" style="margin-top: 15px">Update avatar &#9660;</h5>
+    <div id="avatar-form" class="d-none">
+      <%= simple_form_for(current_user, html: { class: 'user-form' }) do |f| %>
+        <%= f.input :photo, as: :file, label: false, input_html: { class: 'form-input' } %>
+        <%= f.button :submit, "Update", class: 'form-submit' %>
+      <% end %>
+    </div>
 
+    <p style="margin-top: 20px"><%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %></p>
+
+  </div>
+  <div class="column col-7">
+    <h2 style="margin-top: 15px">Queued jobs</h2>
+    <div id="jobs">
+      <% Sidekiq::ScheduledSet.new.each do |job| %>
+        <ul>
+        <li><strong><%= job.args[0]["job_class"] %></strong></li>
+          <ul>
+            <li><%= Time.zone.parse(job.args[0]["scheduled_at"]).in_time_zone("London").strftime("%A %d %B, %H:%M") %>
+          </ul>
+      <% end %>
+    </div>
+    <hr>
+    <h2>Most recent penalties</h2>
+    <div id="penalties">
+      <% Penalty.where(status:"confirmed").last(3).each do |penalty| %>
+        <ul>
+          <li><strong><%= penalty.fplteam.player_name %> (<%= penalty.fplteam.discord_name %>)</strong></li>
+          <ul>
+            <li><%= penalty.player.web_name %></li>
+            <li>Gameweek <%= penalty.gameweek %></li>
+            <li><%= penalty.points_deducted %> points deducted</li>
+          </ul>
+        </ul>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+
+<script>
+  document.getElementById('avatar-link').addEventListener('click', function() {
+    var form = document.getElementById('avatar-form');
+    form.classList.toggle('d-none');
+  });
+</script>
