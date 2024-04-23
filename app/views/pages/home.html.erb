@@ -25,6 +25,11 @@
         <%= render 'penalties', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek %>
       </div>
       <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
+      <% if current_user && current_user.admin? %>
+        <div class="d-flex justify-content-center">
+          <%= link_to 'Admin', '/admin', class: 'btn', style: 'background-color: #69b578; margin-top: 10px' %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
