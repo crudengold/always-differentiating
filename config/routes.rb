@@ -19,13 +19,16 @@ Rails.application.routes.draw do
   get "/fplteams", to: "fplteams#index"
   get "fplteams/:id", to: "fplteams#show", as: :fplteam
   get "/transfers", to: "pages#transfers"
+  get "/admin", to: "pages#admin"
+  get "/penalties", to: "penalties#index"
+  get "/rules", to: "pages#rules"
+  resources :penalties
+
   require "sidekiq/web"
   # Sidekiq::Web.set :sessions, false
   authenticate :user, ->(user) { user.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
-  get "/admin", to: "pages#admin"
-  get "/rules", to: "pages#rules"
 
   resources :feedbacks, only: [:create]
 end

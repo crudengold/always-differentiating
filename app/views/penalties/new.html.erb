@@ -1,0 +1,60 @@
+<div class="container">
+  <%= form_with(model: Penalty.new, local: true) do |form| %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="form-group">
+          <%= form.label :player_id, class: 'form-label' %>
+          <%= form.text_field :player_id, list: 'players', class: 'form-control' %>
+          <datalist id="players">
+            <% Player.all.each do |player| %>
+              <option value="<%= player.id %>"><%= player.web_name %></option>
+            <% end %>
+          </datalist>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="form-group">
+          <%= form.label :fplteam_id, label: "Manager", class: 'form-label' %>
+          <%= form.collection_select :fplteam_id, Fplteam.all, :id, :discord_name, {}, {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="form-group">
+          <%= form.label :points_deducted, class: 'form-label' %>
+          <%= form.number_field :points_deducted, min: 0, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="form-group">
+          <%= form.label :gameweek, class: 'form-label' %>
+          <%= form.number_field :gameweek, min: 1, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <%= form.hidden_field :status, value: 'confirmed' %>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="form-group">
+          <%= form.submit 'Create penalty', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <%= link_to 'Back', penalties_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
