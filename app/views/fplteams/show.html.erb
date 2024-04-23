@@ -24,7 +24,6 @@
     <div class="column col-6">
       <h4 style="text-align: center">Past penalties</h4>
       <% penalties = Penalty.where(fplteam: @manager, status: "confirmed").order(gameweek: :desc) %>
-      <% raise %>
       <% penalties.each do |penalty| %>
         <li>Gameweek <%= penalty.gameweek %>, <%= penalty.player.web_name %>, <%= penalty.points_deducted %> points</li>
       <% end %>
