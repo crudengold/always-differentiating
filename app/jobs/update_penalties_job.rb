@@ -8,11 +8,10 @@ class UpdatePenaltiesJob < ApplicationJob
   def perform(*args)
     all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
     gameweek = Gameweek.new(all_data, "current").gw_num
-
     all_picks_for_gw = Pick.where(gameweek: gameweek)
 
     all_picks_for_gw.each do |pick|
-      Penalty.create_or_update_penalty(pick, gameweek)
+      Penalty.create_or_update_penalty(pick, gameweek, all_data)
       p "all picks checked for gameweek #{gameweek}"
     end
   end
