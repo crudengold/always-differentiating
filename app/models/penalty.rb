@@ -7,9 +7,7 @@ class Penalty < ApplicationRecord
 
   def self.create_or_update_penalty(pick, gameweek, data)
     next_deadline = Gameweek.new(data, "next").deadline
-    byebug
     if pick.player.past_ownership_stats[gameweek.to_s] >= 15
-      byebug
       if Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam).empty?
         Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
         UpdatePenaltyPointsJob.set(wait_until: next_deadline).perform_later(penalty)
