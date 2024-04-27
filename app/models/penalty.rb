@@ -5,11 +5,11 @@ class Penalty < ApplicationRecord
   belongs_to :fplteam
   belongs_to :player
 
-  def self.create_or_update_penalty(pick, gameweek)
-    gw_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
-    next_deadline = Gameweek.new(gw_data, "next").deadline
-
+  def self.create_or_update_penalty(pick, gameweek, data)
+    next_deadline = Gameweek.new(data, "next").deadline
+    byebug
     if pick.player.past_ownership_stats[gameweek.to_s] >= 15
+      byebug
       if Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam).empty?
         Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
         UpdatePenaltyPointsJob.set(wait_until: next_deadline).perform_later(penalty)
@@ -26,7 +26,7 @@ class Penalty < ApplicationRecord
 
     if pick.player.past_ownership_stats[gameweek.to_s] < 15 &&
         pick.player.past_ownership_stats[gameweek.to_s] >= 10 &&
-        Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - (pick.fplteam.free_hit?(pick.fplteam.entry, gameweek - 1) ? 2 : 1))).nil?
+        Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - (pick.fplteam.free_hit?(pick.fplteam.entry, gameweek - 1) ? 2 : 1))).empty?
       Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
       UpdatePenaltyPointsJob.set(wait_until: next_deadline - 24.hours).perform_later(penalty)
     end

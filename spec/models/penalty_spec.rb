@@ -124,4 +124,9 @@ RSpec.describe Penalty, type: :model do
       }.to change(Penalty, :count).by(0)
     end
   end
+
+  describe '.create_or_update_penalty' do
+
+
+  end
 end
