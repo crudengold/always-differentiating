@@ -28,7 +28,7 @@ class Gameweek
   def illegal_players
     illegal_players = {}
     Player.all.each do |player|
-      if !player.past_ownership_stats[@gw_num.to_s].nil? && player.past_ownership_stats[@gw_num.to_s] > 10
+      if !player.past_ownership_stats[@gw_num.to_s].nil? && player.past_ownership_stats[@gw_num.to_s] >= 10
         illegal_players[player] = player.past_ownership_stats[@gw_num.to_s]
       end
     end
