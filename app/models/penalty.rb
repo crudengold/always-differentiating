@@ -6,11 +6,11 @@ class Penalty < ApplicationRecord
   belongs_to :player
 
   def self.create_or_update_penalty(pick, gameweek, data)
-    next_deadline = Gameweek.new(data, "next").deadline
+    next_deadline = Gameweek.new(data, "next").deadline - 1.day
     if pick.player.past_ownership_stats[gameweek.to_s] >= 15
       if Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam).empty?
         Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
-        UpdatePenaltyPointsJob.set(wait_until: next_deadline).perform_later(penalty)
+        UpdatePenaltyPointsJob.set(wait_until: next_deadline).perform_later(Penalty.last)
       else
         pending_penalties = Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam)
         pending_penalties.each do |penalty|
@@ -21,12 +21,11 @@ class Penalty < ApplicationRecord
         end
       end
     end
-
     if pick.player.past_ownership_stats[gameweek.to_s] < 15 &&
-        pick.player.past_ownership_stats[gameweek.to_s] >= 10 &&
-        Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - (pick.fplteam.free_hit?(pick.fplteam.entry, gameweek - 1) ? 2 : 1))).empty?
+      pick.player.past_ownership_stats[gameweek.to_s] >= 10 &&
+      Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - (pick.fplteam.free_hit?(pick.fplteam.entry, gameweek - 1) ? 2 : 1))).empty?
       Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
-      UpdatePenaltyPointsJob.set(wait_until: next_deadline - 24.hours).perform_later(penalty)
+      UpdatePenaltyPointsJob.set(wait_until: next_deadline - 24.hours).perform_later(Penalty.last)
     end
   end
 
