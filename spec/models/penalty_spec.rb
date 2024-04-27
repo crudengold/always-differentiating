@@ -37,6 +37,13 @@ RSpec.describe Penalty, type: :model do
       expect(penalty.fplteam).to eq(fplteam_2)
       expect(penalty.player).to eq(player_1)
     end
+    it 'does not create penalties for fplteams that did free hit last week' do
+      expect {
+        Penalty.create_for_non_free_hitters(gameweek, illegal_players, last_weeks_free_hitters)
+      }.to change(Penalty, :count).by(1)
+
+      expect(Penalty.where(fplteam: fplteam_1, player: player_1)).not_to exist
+    end
   end
 
 
@@ -54,6 +61,14 @@ RSpec.describe Penalty, type: :model do
       penalty = Penalty.last
       expect(penalty.fplteam).to eq(fplteam_1)
       expect(penalty.player).to eq(player_2)
+    end
+
+    it 'does not create penalties for players that were only brought in on free hit last week' do
+      expect {
+        Penalty.create_for_free_hitters(gameweek, illegal_players, last_weeks_free_hitters)
+      }.to change(Penalty, :count).by(1)
+
+      expect(Penalty.where(fplteam: fplteam_1, player: player_1)).not_to exist
     end
   end
 
@@ -82,6 +97,14 @@ RSpec.describe Penalty, type: :model do
   end
 
   describe '.create_or_update_penalty' do
+    before do
+      Sidekiq::Testing.fake!
+    end
+
+    after do
+      Sidekiq::Testing.disable!
+    end
+
     it 'calls the create_or_update_penalty method with correct arguments' do
       expect(Penalty).to receive(:create_or_update_penalty).with(Pick.first, gameweek, api_data).and_call_original
       Penalty.create_or_update_penalty(Pick.first, gameweek, api_data)
