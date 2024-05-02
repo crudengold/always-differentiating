@@ -21,4 +21,9 @@
       <% end %>
     </tbody>
   </table>
+  <% if current_user && current_user.admin? %>
+    <div class="d-flex justify-content-center">
+      <%= button_to 'Update table', update_scores_pages_path, form: { class: 'button_to' }, class: 'btn', style: 'background-color: #69b578; margin-top: 10px' %>
+    </div>
+  <% end %>
 </div>
