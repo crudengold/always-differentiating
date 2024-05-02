@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   end
 
   resources :feedbacks, only: [:create, :destroy]
+
+  post 'pages/update_scores', to: 'pages#update_scores', as: 'update_scores_pages'
 end

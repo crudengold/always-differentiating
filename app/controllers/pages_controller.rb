@@ -49,4 +49,9 @@ class PagesController < ApplicationController
 
   def rules
   end
+
+  def update_scores
+    UpdateTeamScoresJob.perform_now
+    redirect_to root_path
+  end
 end
