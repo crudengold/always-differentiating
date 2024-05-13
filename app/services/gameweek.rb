@@ -15,6 +15,7 @@ class Gameweek
         return num["id"]
       end
     end
+    return 38
   end
 
   def get_deadline
@@ -23,6 +24,7 @@ class Gameweek
         return Time.zone.parse(num["deadline_time"]).in_time_zone("London")
       end
     end
+    return Time.zone.parse("2024-05-19T13:30:00Z").in_time_zone("London")
   end
 
   def illegal_players
