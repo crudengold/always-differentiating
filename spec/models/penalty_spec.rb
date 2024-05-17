@@ -12,6 +12,7 @@ RSpec.describe Penalty, type: :model do
   let(:illegal_players) { {player_1 => 16, player_2 => 16} }
   let(:last_weeks_free_hitters) { [fplteam_1] }
   let(:api_data) { JSON.parse(File.read("./test/fixtures/api_data.json")) }
+  let(:end_of_season_data) { JSON.parse(File.read("./test/fixtures/end_of_season_data.json")) }
   let (:gw35_pick_1) { Pick.create!(player: player_3, fplteam: fplteam_1, gameweek: 35) }
   let (:gw35_pick_2) { Pick.create!(player: player_1, fplteam: fplteam_2, gameweek: 35) }
   let (:gw35_pick_3) { Pick.create!(player: player_4, fplteam: fplteam_1, gameweek: 35) }
@@ -20,6 +21,7 @@ RSpec.describe Penalty, type: :model do
     Pick.create!(player: player_2, fplteam: fplteam_1, gameweek: 33)
     Pick.create!(player: player_1, fplteam: fplteam_2, gameweek: 34)
     Pick.create!(player: player_2, fplteam: fplteam_1, gameweek: 34)
+    ActiveJob::Base.queue_adapter = :test
   end
 
   describe '.create_for_non_free_hitters' do
@@ -139,6 +141,22 @@ RSpec.describe Penalty, type: :model do
       expect {
         Penalty.create_or_update_penalty(gw35_pick_3, gameweek, api_data)
       }.to change(Penalty, :count).by(0)
+    end
+
+    context 'during the season' do
+      it 'queues a job' do
+        allow(fplteam_1).to receive(:free_hit?).and_return(true)
+        Penalty.create_or_update_penalty(gw35_pick_1, gameweek, api_data)
+        expect(UpdatePenaltyPointsJob).to have_been_enqueued
+      end
+    end
+
+    context 'at the end of the season' do
+      it 'does not queue a job' do
+        allow(fplteam_1).to receive(:free_hit?).and_return(true)
+        Penalty.create_or_update_penalty(gw35_pick_1, gameweek, end_of_season_data)
+        expect(UpdatePenaltyPointsJob).not_to have_been_enqueued
+      end
     end
   end
 end
