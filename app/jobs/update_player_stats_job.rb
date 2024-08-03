@@ -12,7 +12,7 @@ class UpdatePlayerStatsJob < ApplicationJob
     deadline = next_gameweek.deadline
     after_deadline = deadline + 90.minutes
 
-    if Player.find_by(web_name: "Salah").past_ownership_stats.key?(gameweek) == false
+    if Player.first.nil? || Player.find_by(web_name: "Haaland").past_ownership_stats.key?(gameweek) == false
       all_data["elements"].each do |player|
         Player.create_or_update_player(player, gameweek)
       end
@@ -20,7 +20,7 @@ class UpdatePlayerStatsJob < ApplicationJob
       print "Stats already logged for Gameweek #{gameweek}"
     end
 
-    GetPendingPenaltiesJob.perform_now
+    # GetPendingPenaltiesJob.perform_now
     GetCurrentPicksJob.set(wait_until: after_deadline).perform_later
   end
 end

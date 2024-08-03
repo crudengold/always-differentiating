@@ -7,6 +7,7 @@ class ApiJson
   end
 
   def get
+    # binding.pry
     user_serialized = URI.open(@url).read
     all_data = JSON.parse(user_serialized)
   end

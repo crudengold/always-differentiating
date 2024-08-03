@@ -12,7 +12,6 @@ class PagesController < ApplicationController
 
   def home
     all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
-    previous_gw = Gameweek.new(all_data, "previous")
     current_gw = Gameweek.new(all_data, "current")
     next_gw = Gameweek.new(all_data, "next")
     @gameweek = next_gw.gw_num
