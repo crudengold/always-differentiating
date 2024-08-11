@@ -25,7 +25,11 @@ class PagesController < ApplicationController
     @penalties = Penalty.where("gameweek = ?", @gameweek)
     @latest_confirmed_penalties = Penalty.where("status = 'confirmed' AND gameweek = ?", @gameweek - 1)
     @penalty_players = @penalties.distinct.pluck(:player_id)
-    @transfers = current_gw.transfers
+    if next_gw.gw_num < 3
+      @transfers = {}
+    else
+      @transfers = current_gw.transfers
+    end
   end
 
   def test

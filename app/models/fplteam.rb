@@ -6,6 +6,7 @@ class Fplteam < ApplicationRecord
   has_many :penalties
 
   def free_hit?(team_entry, gameweek)
+    return false if gameweek < 2
     url = "https://fantasy.premierleague.com/api/entry/#{team_entry}/event/#{gameweek}/picks/"
     api_data = ApiJson.new(url).get
     api_data["active_chip"] == "freehit"
@@ -21,7 +22,7 @@ class Fplteam < ApplicationRecord
       picks.each do |pick|
         pick_data = Player.find_by(fpl_id: pick["element"])
         # create a new pick for each player
-        pick = Pick.create(player: pick_data, fplteam: manager, gameweek: gameweek)
+        Pick.create(player: pick_data, fplteam: manager, gameweek: gameweek)
       end
     end
   end

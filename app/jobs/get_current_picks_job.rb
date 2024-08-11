@@ -13,7 +13,7 @@ class GetCurrentPicksJob < ApplicationJob
     next_deadline = next_gameweek.deadline
     next_deadline_minus_one = next_deadline - 24.hours
 
-    unless Pick.last.gameweek == gameweek
+    unless Pick&.last&.gameweek == gameweek
       puts "getting picks for gameweek #{gameweek}"
       Fplteam.create_picks_for_gameweek(gameweek)
     end

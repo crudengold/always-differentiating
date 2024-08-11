@@ -5,34 +5,18 @@ class Penalty < ApplicationRecord
   belongs_to :fplteam
   belongs_to :player
 
+  POINTS_DEDUCTED = 4
+
   def self.create_or_update_penalty(pick, gameweek, data)
     next_gameweek = Gameweek.new(data, "next")
     next_deadline = next_gameweek.deadline - 1.day
-    if pick.player.past_ownership_stats[gameweek.to_s] >= 15
-      if Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam).empty?
-        Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
-        unless next_gameweek.gw_num == 38
-          UpdatePenaltyPointsJob.set(wait_until: next_deadline).perform_later(Penalty.last)
-        end
-      else
-        pending_penalties = Penalty.where(player: pick.player, gameweek: gameweek, fplteam: pick.fplteam)
-        pending_penalties.each do |penalty|
-          penalty.status = "confirmed"
-          penalty.points_deducted = 4
-          penalty.save
-          unless next_gameweek.gw_num == 38
-            UpdatePenaltyPointsJob.set(wait_until: next_deadline).perform_later(penalty)
-          end
-        end
-      end
-    end
-    if pick.player.past_ownership_stats[gameweek.to_s] < 15 &&
-      pick.player.past_ownership_stats[gameweek.to_s] >= 10 &&
-      Pick.where(player: pick.player, fplteam: pick.fplteam, gameweek: (gameweek - (pick.fplteam.free_hit?(pick.fplteam.entry, gameweek - 1) ? 2 : 1))).empty?
-      Penalty.create(points_deducted: 4, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
-      unless next_gameweek.gw_num == 38
-        UpdatePenaltyPointsJob.set(wait_until: next_deadline - 24.hours).perform_later(Penalty.last)
-      end
+
+    if pick.over_15_percent?
+      create_penalty(pick, gameweek)
+      schedule_update_job(next_gameweek, next_deadline)
+    elsif pick.between_10_and_15_percent? && pick.is_new?
+      create_penalty(pick, gameweek)
+      schedule_update_job(next_gameweek, next_deadline)
     end
   end
 
@@ -67,5 +51,17 @@ class Penalty < ApplicationRecord
         end
       end
     end
+  end
+
+  private
+
+  def self.create_penalty(pick, gameweek)
+    Penalty.create(points_deducted: POINTS_DEDUCTED, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
+  end
+
+  def self.schedule_update_job(next_gameweek, deadline)
+    return if next_gameweek.gw_num == 38
+
+    UpdatePenaltyPointsJob.set(wait_until: deadline).perform_later(Penalty.last)
   end
 end
