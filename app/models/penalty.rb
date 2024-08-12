@@ -5,6 +5,8 @@ class Penalty < ApplicationRecord
   belongs_to :fplteam
   belongs_to :player
 
+  scope :confirmed, -> { where(status: "confirmed") }
+
   POINTS_DEDUCTED = 4
 
   def self.create_or_update_penalty(pick, gameweek, data)

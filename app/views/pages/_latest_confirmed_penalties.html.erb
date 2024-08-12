@@ -8,7 +8,7 @@
     <div class="m-2">
       <h4><strong>Confirmed penalties:</strong></h4>
       <h5>The following penalties have been applied:</h5>
-      <p>(This will update when the first game kicks off)</p>
+      <p>(This will update when the first game of each gameweek kicks off)</p>
       <% penalties.each do |penalty| %>
         <div class="confirmed-penalty-card">
           <h5><strong><%= penalty.player.web_name %> (<%= penalty.player.past_ownership_stats[gameweek.to_s] %>%)</strong></h5>

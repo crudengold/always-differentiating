@@ -12,24 +12,24 @@ class PagesController < ApplicationController
 
   def home
     all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
+
     current_gw = Gameweek.new(all_data, "current")
     next_gw = Gameweek.new(all_data, "next")
-    @gameweek = next_gw.gw_num
+
+    @current_gw = current_gw.gw_num
+    @next_gameweek = next_gw.gw_num
     @deadline = next_gw.deadline
     @deadline_minus_one = @deadline - 24.hours
-    @update_time = (Player.last.updated_at).in_time_zone("London")
-    @illegal_players = next_gw.illegal_players
-    @illegal_players = @illegal_players.sort_by {|_key, value| value}.reverse.to_h
-    @last_week_illegal_players = current_gw.illegal_players
-    @last_week_illegal_players = @last_week_illegal_players.sort_by {|_key, value| value}.reverse.to_h
-    @penalties = Penalty.where("gameweek = ?", @gameweek)
-    @latest_confirmed_penalties = Penalty.where("status = 'confirmed' AND gameweek = ?", @gameweek - 1)
+    @update_time = Player.last.updated_at.in_time_zone("London")
+
+    @illegal_players = sorted_illegal_players(next_gw.illegal_players)
+    @last_week_illegal_players = sorted_illegal_players(current_gw.illegal_players)
+
+    @penalties = Penalty.where(gameweek: @gameweek)
+    @latest_confirmed_penalties = Penalty.confirmed.where(gameweek: @current_gameweek)
     @penalty_players = @penalties.distinct.pluck(:player_id)
-    if next_gw.gw_num < 3
-      @transfers = {}
-    else
-      @transfers = current_gw.transfers
-    end
+
+    @transfers = @next_gameweek < 3 ? {} : current_gw.transfers
   end
 
   def test
@@ -56,5 +56,11 @@ class PagesController < ApplicationController
   def update_scores
     UpdateTeamScoresJob.perform_now
     redirect_to root_path
+  end
+
+  private
+
+  def sorted_illegal_players(players)
+    players.sort_by { |_key, value| -value }.to_h
   end
 end
