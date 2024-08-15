@@ -12,7 +12,7 @@ class UpdatePlayerStatsJob < ApplicationJob
     deadline = next_gameweek.deadline
     after_deadline = deadline + 90.minutes
 
-    if Player.first.nil? || Player.find_by(web_name: "Haaland").past_ownership_stats.key?(gameweek) == false
+    if Player.first.nil? || Player.find_by(web_name: "Haaland")&.past_ownership_stats&.key?(gameweek) == false
       all_data["elements"].each do |player|
         Player.create_or_update_player(player, gameweek)
       end
