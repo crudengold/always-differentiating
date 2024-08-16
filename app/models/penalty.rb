@@ -11,10 +11,10 @@ class Penalty < ApplicationRecord
     next_gameweek = Gameweek.new(data, "next")
     next_deadline = next_gameweek.deadline - 1.day
 
-    if pick.over_15_percent?
+    if pick.over_15_percent?(gameweek)
       create_penalty(pick, gameweek)
       schedule_update_job(next_gameweek, next_deadline)
-    elsif pick.between_10_and_15_percent? && pick.is_new?
+    elsif pick.between_10_and_15_percent?(gameweek) && pick.is_new?
       create_penalty(pick, gameweek)
       schedule_update_job(next_gameweek, next_deadline)
     end
