@@ -5,15 +5,15 @@ class Fplteam < ApplicationRecord
   has_many :picks
   has_many :penalties
 
-  def free_hit?(team_entry, gameweek)
+  def free_hit?(gameweek)
     return false if gameweek < 2
-    url = "https://fantasy.premierleague.com/api/entry/#{team_entry}/event/#{gameweek}/picks/"
+    url = "https://fantasy.premierleague.com/api/entry/#{self.entry}/event/#{gameweek}/picks/"
     api_data = ApiJson.new(url).get
     api_data["active_chip"] == "freehit"
   end
 
   def self.last_weeks_free_hitters(gameweek)
-    all.select { |fplteam| fplteam.free_hit?(fplteam.entry, gameweek - 1) }
+    all.select { |fplteam| fplteam.free_hit?(gameweek - 1) }
   end
 
   def self.create_picks_for_gameweek(gameweek)
