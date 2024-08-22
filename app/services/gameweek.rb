@@ -28,13 +28,7 @@ class Gameweek
   end
 
   def illegal_players
-    illegal_players = {}
-    Player.all.each do |player|
-      if !player.past_ownership_stats[@gw_num.to_s].nil? && player.past_ownership_stats[@gw_num.to_s] >= 10
-        illegal_players[player] = player.past_ownership_stats[@gw_num.to_s]
-      end
-    end
-    illegal_players
+    Player.illegal_players(@gw_num)
   end
 
   def transfers
@@ -42,11 +36,8 @@ class Gameweek
     Fplteam.all.each do |team|
       transfers[team.entry_name] = { in: [], out: [] }
 
-      last_week_key = (@gw_num - (team.free_hit?(@gw_num - 1) ? 2 : 1)).to_s
-      this_week_key = @gw_num.to_s
-
-      last_week = team.picks[last_week_key] || []
-      this_week = team.picks[this_week_key] || []
+      last_week = team.picks_for_last_week(@gw_num)
+      this_week = team.picks_for_this_week(@gw_num)
 
       last_week_player_ids = last_week.map { |player| player["id"] }
       this_week_player_ids = this_week.map { |player| player["id"] }

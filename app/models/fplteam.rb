@@ -5,6 +5,16 @@ class Fplteam < ApplicationRecord
   # has_many :picks
   has_many :penalties
 
+  def picks_for_last_week(current_gw)
+    last_week_key = (current_gw - (free_hit?(current_gw - 1) ? 2 : 1)).to_s
+    picks[last_week_key] || []
+  end
+
+  def picks_for_this_week(current_gw)
+    this_week_key = current_gw.to_s
+    picks[this_week_key] || []
+  end
+
   def free_hit?(gameweek)
     return false if gameweek < 2
     url = "https://fantasy.premierleague.com/api/entry/#{self.entry}/event/#{gameweek}/picks/"

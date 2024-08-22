@@ -5,7 +5,7 @@
       <div class="tab-content" data-controller="players-clipboard">
         <div class="main-box" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
           <div>
-            <h4>Screenshot for <strong>Gameweek <%= @gameweek %></strong></h4>
+            <h4>Screenshot for <strong>Gameweek <%= @next_gameweek %></strong></h4>
             <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
           </div>
           <div class="p-1 bg-white" style="border-radius: 5px">
@@ -16,15 +16,15 @@
           <%= render 'table' %>
         </div>
         <div class="transfers d-none" data-tabs-target="content" data-tab="3">
-          <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
+          <%= render 'transfers', transfers: @transfers, gameweek: @next_gameweek - 1 %>
         </div>
       </div>
     </div>
     <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 24px" id="right-column">
       <div class="m-0 p-0" id="penalties">
-        <%= render 'penalties', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek %>
+        <%= render 'penalties', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @next_gameweek %>
       </div>
-      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
+      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @next_gameweek %></div>
             <div class="d-flex justify-content-center">
         <a href="#" style="text-align: center" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Learn more about this site
@@ -68,16 +68,16 @@
 <% if @illegal_players.empty? %>
   <div class="row" style="width: 100%">
     <div class="column col-xs-12 col-sm-8" style="text-align: center" id="table-outside" data-controller="tabs">
-      <%= render 'tabs', illegal_players: @illegal_players, gameweek: @gameweek - 1 %>
+      <%= render 'tabs', illegal_players: @illegal_players, gameweek: @next_gameweek - 1 %>
       <div class="table" data-tabs-target="content" data-tab="2">
         <%= render 'table' %>
       </div>
       <div class="transfers d-none d-flex justify-content-center" data-tabs-target="content" data-tab="3">
-        <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
+        <%= render 'transfers', transfers: @transfers, gameweek: @next_gameweek - 1 %>
       </div>
       <div class="main-box d-none" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
         <div>
-          <h4>Screenshot for <strong>Gameweek <%= @gameweek- 1 %></strong></h4>
+          <h4>Screenshot for <strong>Gameweek <%= @next_gameweek- 1 %></strong></h4>
           <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
         </div>
         <div class="p-1 bg-white" style="border-radius: 5px">
@@ -87,9 +87,9 @@
     </div>
     <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 53px" id="right-column">
       <div class="m-0 p-0" id="penalties">
-        <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
+        <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @next_gameweek - 1 %>
       </div>
-      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
+      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @next_gameweek %></div>
       <div class="d-flex justify-content-center">
         <a href="#" style="text-align: center" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Learn more about this site

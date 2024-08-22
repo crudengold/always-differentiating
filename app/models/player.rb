@@ -5,6 +5,10 @@ class Player < ApplicationRecord
   has_many :penalties, dependent: :destroy
   serialize :past_ownership_stats, type: Hash, coder: JSON
 
+  scope :with_ownership_above, ->(gameweek, threshold) {
+    where("past_ownership_stats::jsonb ->> ? IS NOT NULL AND (past_ownership_stats::jsonb ->> ?)::float >= ?", gameweek.to_s, gameweek.to_s, threshold)
+  }
+
   def self.create_or_update_player(player, gameweek)
     player_record = Player.find_by(fpl_id: player["id"])
 
@@ -32,12 +36,11 @@ class Player < ApplicationRecord
   end
 
   def self.illegal_players(gameweek)
+    threshold = 10
     players = {}
 
-    all.each do |player|
-      if !player.past_ownership_stats[gameweek.to_s].nil? && player.past_ownership_stats[gameweek.to_s] >= 15
-        players[player] = player.past_ownership_stats[gameweek.to_s]
-      end
+    with_ownership_above(gameweek, threshold).each do |player|
+      players[player] = player.past_ownership_stats[gameweek.to_s]
     end
 
     players
