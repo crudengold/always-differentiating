@@ -2,7 +2,7 @@ require_relative "../services/api_json.rb"
 
 class Fplteam < ApplicationRecord
   has_many :players, through: :picks
-  has_many :picks
+  # has_many :picks
   has_many :penalties
 
   def free_hit?(gameweek)
@@ -18,11 +18,12 @@ class Fplteam < ApplicationRecord
 
   def self.create_picks_for_gameweek(gameweek)
     Fplteam.all.each do |manager|
+      next if manager.picks["#{gameweek}"]
       picks = ApiJson.new("https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/#{gameweek}/picks/").get["picks"]
       picks.each do |pick|
         pick_data = Player.find_by(fpl_id: pick["element"])
         # create a new pick for each player
-        Pick.create(player: pick_data, fplteam: manager, gameweek: gameweek)
+        manager.picks["#{gameweek}"] << pick_data
       end
     end
   end

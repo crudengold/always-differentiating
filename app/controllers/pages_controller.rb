@@ -11,9 +11,9 @@ class PagesController < ApplicationController
   before_action :authenticate_user!, only: [:admin]
 
   def home
-    all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
-    current_gw = Gameweek.new(all_data, "current")
-    next_gw = Gameweek.new(all_data, "next")
+    # all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
+    current_gw = Gameweek.new("current")
+    next_gw = Gameweek.new("next")
     @gameweek = next_gw.gw_num
     @deadline = next_gw.deadline
     @deadline_minus_one = @deadline - 24.hours

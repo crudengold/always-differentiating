@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_21_113627) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_19_165438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_21_113627) do
     t.string "discord_name"
     t.integer "deductions", default: 0
     t.integer "total_after_deductions", default: 0
+    t.jsonb "picks", default: {}, null: false
   end
 
   create_table "penalties", force: :cascade do |t|
