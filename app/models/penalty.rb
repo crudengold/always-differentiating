@@ -7,8 +7,8 @@ class Penalty < ApplicationRecord
 
   POINTS_DEDUCTED = 4
 
-  def self.create_or_update_penalty(pick, gameweek, data)
-    next_gameweek = Gameweek.new(data, "next")
+  def self.create_or_update_penalty(pick, gameweek)
+    next_gameweek = Gameweek.new("next")
     next_deadline = next_gameweek.deadline - 1.day
 
     if pick.over_15_percent?(gameweek)
