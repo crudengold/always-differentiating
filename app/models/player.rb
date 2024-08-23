@@ -9,6 +9,32 @@ class Player < ApplicationRecord
     where("past_ownership_stats::jsonb ->> ? IS NOT NULL AND (past_ownership_stats::jsonb ->> ?)::float >= ?", gameweek.to_s, gameweek.to_s, threshold)
   }
 
+  def ownership_for_gameweek(gameweek)
+    past_ownership_stats[gameweek.to_s]
+  end
+
+  def over_15_percent(gameweek)
+    ownership_for_gameweek(gameweek) >= 15
+  end
+
+  def ten_to_fifteen_percent(gameweek)
+    ownership_for_gameweek(gameweek) >= 10 && ownership_for_gameweek(gameweek) < 15
+  end
+
+  def was_in_team_last_week(fplteam, gameweek)
+    picks = fplteam.picks_for_last_week(gameweek)
+    picks.include?(self.fpl_id)
+  end
+
+  def is_in_team(fplteam, gameweek)
+    picks = fplteam.picks_for_this_week(gameweek)
+    picks.include?(self.fpl_id)
+  end
+
+  def is_new_pick(fplteam, gameweek)
+    is_in_team(fplteam, gameweek) && !was_in_team_last_week(fplteam, gameweek)
+  end
+
   def self.create_or_update_player(player, gameweek)
     player_record = Player.find_by(fpl_id: player["id"])
 

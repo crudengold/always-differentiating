@@ -28,13 +28,14 @@ class Fplteam < ApplicationRecord
 
   def self.create_picks_for_gameweek(gameweek)
     Fplteam.all.each do |manager|
+
       next if manager.picks["#{gameweek}"]
+      manager.picks["#{gameweek}"] = []
       picks = ApiJson.new("https://fantasy.premierleague.com/api/entry/#{manager.entry}/event/#{gameweek}/picks/").get["picks"]
       picks.each do |pick|
-        pick_data = Player.find_by(fpl_id: pick["element"])
-        # create a new pick for each player
-        manager.picks["#{gameweek}"] << pick_data
+        manager.picks["#{gameweek}"] << pick["element"]
       end
+      manager.save
     end
   end
 

@@ -13,10 +13,15 @@ class UpdatePenaltiesJob < ApplicationJob
 
       next unless picks_for_gw
 
-      picks_for_gw.each do |player|
-        Penalty.create_or_update_penalty(player, gameweek)
-        p "all picks checked for gameweek #{gameweek} for team #{fplteam.id}"
+      picks_for_gw.each do |player_id|
+        player = Player.find_by(fpl_id: player_id)
+        if player.over_15_percent(gameweek)
+          Penalty.create_or_update_penalty(player, gameweek, fplteam)
+        elsif player.ten_to_fifteen_percent(gameweek) && player.is_new_pick(fplteam, gameweek)
+          Penalty.create_or_update_penalty(player, gameweek, fplteam)
+        end
       end
+      p "all picks checked for gameweek #{gameweek} for team #{fplteam.id}"
     end
   end
 end
