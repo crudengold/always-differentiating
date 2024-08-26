@@ -6,14 +6,14 @@ class GetCurrentPicksJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
+    # all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
 
-    gameweek = Gameweek.new(all_data, "current").gw_num
-    next_gameweek = Gameweek.new(all_data, "next")
+    gameweek = Gameweek.new("current").gw_num
+    next_gameweek = Gameweek.new("next")
     next_deadline = next_gameweek.deadline
     next_deadline_minus_one = next_deadline - 24.hours
 
-    unless Pick&.last&.gameweek == gameweek
+    unless Fplteam&.last&.picks&.keys&.last == gameweek.to_s
       puts "getting picks for gameweek #{gameweek}"
       Fplteam.create_picks_for_gameweek(gameweek)
     end

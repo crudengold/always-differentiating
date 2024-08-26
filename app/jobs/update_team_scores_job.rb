@@ -5,7 +5,7 @@ class UpdateTeamScoresJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    teams = ApiJson.new("https://fantasy.premierleague.com/api/leagues-classic/856460/standings/").get["standings"]["results"]
+    teams = ApiJson.new("https://fantasy.premierleague.com/api/leagues-classic/560149/standings/").get["standings"]["results"]
     update_penalties(teams)
     update_scores(teams)
   end

@@ -6,13 +6,22 @@ class UpdatePenaltiesJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
-    gameweek = Gameweek.new(all_data, "current").gw_num
-    all_picks_for_gw = Pick.where(gameweek: gameweek)
+    gameweek = Gameweek.new("current").gw_num
 
-    all_picks_for_gw.each do |pick|
-      Penalty.create_or_update_penalty(pick, gameweek, all_data)
-      p "all picks checked for gameweek #{gameweek}"
+    Fplteam.find_each do |fplteam|
+      picks_for_gw = fplteam.picks[gameweek.to_s]
+
+      next unless picks_for_gw
+
+      picks_for_gw.each do |player_id|
+        player = Player.find_by(fpl_id: player_id)
+        if player.over_15_percent(gameweek)
+          Penalty.create_or_update_penalty(player, gameweek, fplteam)
+        elsif player.ten_to_fifteen_percent(gameweek) && player.is_new_pick(fplteam, gameweek)
+          Penalty.create_or_update_penalty(player, gameweek, fplteam)
+        end
+      end
+      p "all picks checked for gameweek #{gameweek} for team #{fplteam.id}"
     end
   end
 end

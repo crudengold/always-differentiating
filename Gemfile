@@ -92,3 +92,5 @@ gem "cloudinary"
 gem 'simple_form'
 
 gem 'sassc-rails'
+
+gem 'view_component', '~> 2.41'
