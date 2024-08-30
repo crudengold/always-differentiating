@@ -9,7 +9,7 @@ namespace :migrate do
       Pick.where(fplteam: fplteam).each do |pick|
         gameweek = pick.gameweek.to_s
         picks_hash[gameweek] ||= []
-        picks_hash[gameweek] << pick.player
+        picks_hash[gameweek] << pick.player.fpl_id
       end
 
       fplteam.update(picks: picks_hash)
