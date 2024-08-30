@@ -1,0 +1,9 @@
+<div class="main-box" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
+  <div>
+    <h4>Screenshot for <strong>Gameweek <%= gameweek %></strong></h4>
+    <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
+  </div>
+  <div class="p-1 bg-white" style="border-radius: 5px">
+    <%= render 'players', illegal_players:, percentage: 10, gameweek: %>
+  </div>
+</div>

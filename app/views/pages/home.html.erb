@@ -1,133 +1,28 @@
-<% unless @illegal_players.empty? %>
-  <div class="row" style="width: 100%">
-    <div class="column col-xs-12 col-sm-8" style="text-align: center" data-controller="tabs">
-      <%= render 'tabs', illegal_players: @illegal_players %>
-      <div class="tab-content" data-controller="players-clipboard">
-        <div class="main-box" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
-          <div>
-            <h4>Screenshot for <strong>Gameweek <%= @gameweek %></strong></h4>
-            <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
-          </div>
-          <div class="p-1 bg-white" style="border-radius: 5px">
-            <%= render 'players', illegal_players: @illegal_players, percentage: 10 %>
-          </div>
-        </div>
-        <div class="table d-none" data-tabs-target="content" data-tab="2">
-          <%= render 'table' %>
-        </div>
-        <div class="transfers d-none" data-tabs-target="content" data-tab="3">
-          <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
-        </div>
-      </div>
-    </div>
-    <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 24px" id="right-column">
-      <div class="m-0 p-0" id="penalties">
-        <%= render 'penalties', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek %>
-      </div>
-      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
-            <div class="d-flex justify-content-center">
-        <a href="#" style="text-align: center" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Learn more about this site
-        </a>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">About Always Differentiating</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Always Differentiating is a Fantasy Premier League league, where the main rule is: you're not allowed to pick the most popular FPL players.</p>
-                <p>Initially, this was tricky, because every week, each team in the league needed to be manually checked for 'illegal' players.</p>
-                <p>What this site does is:</p>
-                <ul>
-                  <li><strong>Grabs a list of the illegal players:</strong> Each gameweek, a definitive list of the illegal players is pulled from the FPL API. We do this because the numbers constantly change and shift, and we want all managers to be working from the same data. The list is pulled 24 hours before the FPL deadline. This is because we have managers in West Coast USA and managers in Australia, so this way nobody can be caught out by numbers shifting in the middle of the night.</li>
-                  <li><strong>Logs and tracks penalties:</strong> If a manager fails to transfer an illegal player, or transfers an illegal player in, they incur a points penalty. The site shows any penalties incurred after the FPL deadline and tracks them in a points table.</li>
-                  <li><strong>Shows transfers for the gameweek:</strong> Under the 'transfers' tab, you can see who a manager has transferred in/out for the gameweek. This was to provide an extra level of visibility (mainly in the early stages when I wanted to make sure my code was running properly!)</li>
-                </ul>
-                <p>I created this page to help us run the league, but also to help me practice my skills as a software engineer. I actually presented this site in a job interview in April 2024, and as a result I am now working my dream job!</p>
-                <p>It costs me about £4 a month to run this site, which I am happy to pay. But if you'd like to say thanks, <a href="https://ko-fi.com/crudengold">you can buy me a coffee</a>, that would be super kind of you :)</p>
-                <p>You can read the rules for the league and provide feedback on this site <%= link_to 'on this page', rules_path %></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <% if current_user && current_user.admin? %>
-        <div class="d-flex justify-content-center">
-          <%= link_to 'Admin', '/admin', class: 'btn', style: 'background-color: #69b578; margin-top: 10px' %>
-        </div>
+<div class="row" style="width: 100%">
+  <div class="column col-xs-12 col-sm-8 text-center" data-controller="tabs">
+    <%= render 'tabs', illegal_players: @illegal_players %>
+
+    <div class="tab-content">
+      <% if @illegal_players.any? %>
+        <%= render 'screenshot', gameweek: @next_gw, illegal_players: @illegal_players %>
+      <% else %>
+        <%= render 'screenshot', gameweek: @current_gw, illegal_players: @last_week_illegal_players %>
       <% end %>
-    </div>
-  </div>
-<% end %>
-<% if @illegal_players.empty? %>
-  <div class="row" style="width: 100%">
-    <div class="column col-xs-12 col-sm-8" style="text-align: center" id="table-outside" data-controller="tabs">
-      <%= render 'tabs', illegal_players: @illegal_players, gameweek: @gameweek - 1 %>
-      <div class="table" data-tabs-target="content" data-tab="2">
+
+      <div class="table d-none" data-tabs-target="content" data-tab="2">
         <%= render 'table' %>
       </div>
       <div class="transfers d-none d-flex justify-content-center" data-tabs-target="content" data-tab="3">
-        <%= render 'transfers', transfers: @transfers, gameweek: @gameweek - 1 %>
+        <%= render 'transfers', transfers: @transfers, gameweek: @current_gw %>
       </div>
-      <div class="main-box d-none" style="margin-top: 20px" data-tabs-target="content" data-tab="1">
-        <div>
-          <h4>Screenshot for <strong>Gameweek <%= @gameweek- 1 %></strong></h4>
-          <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
-        </div>
-        <div class="p-1 bg-white" style="border-radius: 5px">
-          <%= render 'players', illegal_players: @last_week_illegal_players, percentage: 10 %>
-        </div>
-      </div>
-    </div>
-    <div class="column col-xs-12 col-sm-4 p-0" style="margin-top: 53px" id="right-column">
-      <div class="m-0 p-0" id="penalties">
-        <%= render 'latest_confirmed_penalties', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @gameweek - 1 %>
-      </div>
-      <div id="test-countdown"><%= render 'countdown', deadline: @deadline, deadline_minus_one: @deadline_minus_one, gameweek: @gameweek %></div>
-      <div class="d-flex justify-content-center">
-        <a href="#" style="text-align: center" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Learn more about this site
-        </a>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">About Always Differentiating</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Always Differentiating is a Fantasy Premier League league, where the main rule is: you're not allowed to pick the most popular FPL players.</p>
-                <p>Initially, this was tricky, because every week, each team in the league needed to be manually checked for 'illegal' players.</p>
-                <p>What this site does is:</p>
-                <ul>
-                  <li><strong>Grabs a list of the illegal players:</strong> Each gameweek, a definitive list of the illegal players is pulled from the FPL API. We do this because the numbers constantly change and shift, and we want all managers to be working from the same data. The list is pulled 24 hours before the FPL deadline. This is because we have managers in West Coast USA and managers in Australia, so this way nobody can be caught out by numbers shifting in the middle of the night.</li>
-                  <li><strong>Checks teams for illegal players:</strong> The site then checks each manager's team for any illegal players, and generates warnings for that manager. The manager must transfer out their illegal player or incur a points penalty.</li>
-                  <li><strong>Logs and tracks penalties:</strong> If a manager fails to transfer an illegal player, or transfers an illegal player in, they incur a points penalty. The site shows any penalties incurred after the FPL deadline and tracks them in a points table.</li>
-                  <li><strong>Shows transfers for the gameweek:</strong> Under the 'transfers' tab, you can see who a manager has transferred in/out for the gameweek. This was to provide an extra level of visibility (mainly in the early stages when I wanted to make sure my code was running properly!)</li>
-                </ul>
-                <p>I created this page to help us run the league, but also to help me practice my skills as a software engineer. I actually presented this site in a job interview in April 2024, and as a result I am now working my dream job!</p>
-                <p>It costs me about £4 a month to run this site, which I am happy to pay. But if you'd like to say thanks, <a href="https://ko-fi.com/crudengold">you can buy me a coffee</a>, that would be super kind of you :)</p>
-                <p>You can read the rules for the league and provide feedback on this site <%= link_to 'on this page', rules_path %></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <% if current_user && current_user.admin? %>
-        <div class="d-flex justify-content-center">
-          <%= link_to 'Admin', '/admin', class: 'btn', style: 'background-color: #69b578; margin-top: 10px' %>
-        </div>
-      <% end %>
     </div>
   </div>
-<% end %>
+
+  <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
+    <%= render 'right_column_content', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, last_week_illegal_players: @last_week_illegal_players, next_gw: @next_gw, current_gw: @current_gw, screenshot_changes: @screenshot_changes %>
+    <% if current_user && current_user.admin? %>
+      <%= render 'admin_button' %>
+    <% end %>
+    <%= render 'modal' %>
+  </div>
+</div>

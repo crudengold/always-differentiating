@@ -1,0 +1,15 @@
+<div style="margin-top: 24px">
+  <div class="m-0 p-0" id="penalties">
+    <%= render 'latest_confirmed_penalties', penalties:, gameweek: current_gw %>
+  </div>
+  <div class="m-0 p-0" id="changes">
+    <% if illegal_players.any? %>
+      <%= render 'screenshot_changes', screenshot_changes:, gameweek: next_gw %>
+    <% else %>
+      <%= render 'screenshot_changes', screenshot_changes:, gameweek: current_gw %>
+    <% end %>
+  </div>
+  <div id="test-countdown">
+    <%= render 'countdown', deadline: @next_deadline, deadline_minus_one: @next_deadline_minus_one, gameweek: next_gw %>
+  </div>
+</div>

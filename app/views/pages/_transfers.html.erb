@@ -17,14 +17,14 @@
           <div class="transfers-out col-5">
             <h5 style="text-align:center">Out</h5>
             <% count.times do |i| %>
-              <% player = Player.find(value[:out][i - 1]) %>
+              <% player = Player.find_by(fpl_id: value[:out][i - 1]) %>
               <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[gameweek.to_s], gameweek: gameweek  %>
             <% end %>
           </div>
           <div class="transfers-in col-5">
             <h5 style="text-align:center">In</h5>
             <% count.times do |i| %>
-              <% player = Player.find(value[:in][i - 1]) %>
+              <% player = Player.find_by(fpl_id: value[:in][i - 1]) %>
               <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[gameweek.to_s], gameweek: gameweek  %>
             <% end %>
           </div>

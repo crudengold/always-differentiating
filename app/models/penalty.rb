@@ -5,19 +5,16 @@ class Penalty < ApplicationRecord
   belongs_to :fplteam
   belongs_to :player
 
+  scope :confirmed, -> { where(status: "confirmed") }
+
   POINTS_DEDUCTED = 4
 
-  def self.create_or_update_penalty(pick, gameweek, data)
-    next_gameweek = Gameweek.new(data, "next")
+  def self.create_or_update_penalty(pick, gameweek, team)
+    next_gameweek = Gameweek.new("next")
     next_deadline = next_gameweek.deadline - 1.day
 
-    if pick.over_15_percent?(gameweek)
-      create_penalty(pick, gameweek)
-      schedule_update_job(next_gameweek, next_deadline)
-    elsif pick.between_10_and_15_percent?(gameweek) && pick.is_new?
-      create_penalty(pick, gameweek)
-      schedule_update_job(next_gameweek, next_deadline)
-    end
+    create_penalty(pick, gameweek, team)
+    schedule_update_job(next_gameweek, next_deadline)
   end
 
   def update_deducted_points
@@ -55,8 +52,10 @@ class Penalty < ApplicationRecord
 
   private
 
-  def self.create_penalty(pick, gameweek)
-    Penalty.create(points_deducted: POINTS_DEDUCTED, fplteam: pick.fplteam, player: pick.player, status: "confirmed", gameweek: gameweek)
+  def self.create_penalty(pick, gameweek, team)
+    Penalty.create(points_deducted: POINTS_DEDUCTED, fplteam: team, player: pick, status: "confirmed", gameweek: gameweek)
+    p "*!*!*!*!PENALTY CREATED*!*!*!*!"
+    p Penalty.last
   end
 
   def self.schedule_update_job(next_gameweek, deadline)

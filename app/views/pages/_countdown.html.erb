@@ -1,11 +1,10 @@
-<%# Not sure what to do with this, needs reworking %>
 <div style="text-align: center">
   <h5>Screenshot for GW <%= gameweek %> in:</h5>
 </div>
 
 <div id="countdown" style="text-align: center">
   <script>
-    var targetDate = new Date("<%= @deadline_minus_one %>");
+    var targetDate = new Date("<%= @next_deadline_minus_one %>");
     var countdownElement = document.getElementById("countdown");
 
     function updateCountdown() {

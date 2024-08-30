@@ -1,5 +1,5 @@
 <div style="width: 100%" class="d-flex row justify-content-center">
-  <h2 style="margin-top: 25px; text-align: center"><strong>Gameweek <%= @gameweek %> transfers</strong></h2>
+  <h2 style="margin-top: 25px; text-align: center"><strong>Gameweek <%= @next_gameweek %> transfers</strong></h2>
   <% @transfers.each do |key, value| %>
     <% team = Fplteam.find_by(entry_name: key) %>
     <% count = value[:out].count %>
@@ -14,14 +14,14 @@
           <h5 style="text-align:center">Out</h5>
           <% count.times do |i| %>
             <% player = Player.find(value[:out][i - 1]) %>
-            <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@gameweek.to_s], gameweek: @gameweek  %>
+            <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@next_gameweek.to_s], gameweek: @next_gameweek  %>
           <% end %>
         </div>
         <div class="transfers-in col-5">
           <h5 style="text-align:center">In</h5>
           <% count.times do |i| %>
             <% player = Player.find(value[:in][i - 1]) %>
-            <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@gameweek.to_s], gameweek: @gameweek  %>
+            <%= render 'player', player: player, position: player.element_type, selectedby: player.past_ownership_stats[@next_gameweek.to_s], gameweek: @next_gameweek  %>
           <% end %>
         </div>
       </div>

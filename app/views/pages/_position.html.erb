@@ -1,7 +1,7 @@
 <% illegal_players.each do |player| %>
   <% if player[0].element_type == position %>
     <% if player[1] >= percentage %>
-      <%= render 'player', player: player[0], position: position, selectedby: player[1], gameweek: @gameweek %>
+      <%= render PlayerComponent.new(player: player[0], gameweek:) %>
     <% end %>
   <% end %>
 <% end %>
