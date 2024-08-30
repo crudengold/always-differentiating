@@ -1,4 +1,22 @@
-<% last_weeks_illegals = Player.illegal_players(@current_gw) %>
-<div class="column" style="text-align: center">
-  <%= last_weeks_illegals %>
+<div class="m-2" style="text-align: center">
+  <h4><strong>Movers and shakers:</strong></h4>
+  <div class="column" style="text-align: center" id="no-warnings">
+    <h5>New on the screenshot:</h5>
+    <div class="grid-container">
+      <% screenshot_changes[:now_illegal].each do |player| %>
+        <div class="grid-item">
+          <%= render PlayerComponent.new(player:, gameweek:) %>
+        </div>
+      <% end %>
+    </div>
+    <hr>
+    <h5>No longer on the screenshot:</h5>
+    <div class="grid-container">
+      <% screenshot_changes[:now_legal].each do |player| %>
+        <div class="grid-item">
+          <%= render PlayerComponent.new(player:, gameweek:) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

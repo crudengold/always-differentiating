@@ -6,14 +6,13 @@
   <% end %>
   <% unless penalties.empty? %>
     <div class="m-2">
-      <h4><strong>Confirmed penalties:</strong></h4>
-      <h5>The following penalties have been applied:</h5>
-      <p>(This will update when the first game of each gameweek kicks off)</p>
+      <h4><strong>Most recent penalties:</strong></h4>
       <% penalties.each do |penalty| %>
         <div class="confirmed-penalty-card">
-          <h5><strong><%= penalty.player.web_name %> (<%= penalty.player.past_ownership_stats[gameweek.to_s] %>%)</strong></h5>
-          <p><%= penalty.fplteam.entry_name %> (<%= penalty.fplteam.player_name %>)</p>
-          <p style="margin: 0px"><%= penalty.points_deducted %> points deducted (so far)</p>
+          <h5><strong><%= penalty.fplteam.entry_name %></strong> (<%= penalty.fplteam.discord_name %>)</p>
+          <p>Gameweek <%= penalty.gameweek %></p>
+          <h6><strong><%= penalty.player.web_name %> (<%= penalty.player.past_ownership_stats[gameweek.to_s] %>%)</strong></h6>
+          <p style="margin: 0px"><%= penalty.points_deducted %> points deducted</p>
         </div>
       <% end %>
     </div>

@@ -4,6 +4,6 @@
     <h6><%= @update_time.strftime("Updated at: %H:%M UK time, %d %b") %></h6>
   </div>
   <div class="p-1 bg-white" style="border-radius: 5px">
-    <%= render 'players', illegal_players: illegal_players, percentage: 10 %>
+    <%= render 'players', illegal_players:, percentage: 10, gameweek: %>
   </div>
 </div>

@@ -3,7 +3,7 @@
   <% (1..4).each do |i| %>
     <div class="players column col-xs-6 col-sm-3 m-0">
       <h4 style="font-size:100%"><strong><%= positions[i] %></strong></h4>
-      <%= render 'position', position: i, percentage: percentage, illegal_players: illegal_players %>
+      <%= render 'position', position: i, percentage:, illegal_players:, gameweek: %>
     </div>
   <% end %>
 </div>

@@ -1,8 +1,10 @@
 require "open-uri"
 require_relative "../services/api_json.rb"
 require_relative "../services/gameweek.rb"
+require_relative "../helpers/json_helper.rb"
 
 class UpdatePlayerStatsJob < ApplicationJob
+  include JsonHelper
   queue_as :default
 
   def perform(*args)
@@ -19,6 +21,8 @@ class UpdatePlayerStatsJob < ApplicationJob
     else
       print "Stats already logged for Gameweek #{gameweek_no}"
     end
+
+    save_to_file(all_data)
 
     # GetPendingPenaltiesJob.perform_now
     GetCurrentPicksJob.set(wait_until: after_deadline).perform_later

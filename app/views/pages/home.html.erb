@@ -2,25 +2,24 @@
   <div class="column col-xs-12 col-sm-8 text-center" data-controller="tabs">
     <%= render 'tabs', illegal_players: @illegal_players %>
 
-    <div class="tab-content" data-controller="players-clipboard">
+    <div class="tab-content">
       <% if @illegal_players.any? %>
-        <%= render 'main_box', gameweek: @next_gameweek, illegal_players: @illegal_players %>
+        <%= render 'screenshot', gameweek: @next_gw, illegal_players: @illegal_players %>
       <% else %>
-        <%= render 'main_box', gameweek: @current_gameweek, illegal_players: @last_week_illegal_players %>
+        <%= render 'screenshot', gameweek: @current_gw, illegal_players: @last_week_illegal_players %>
       <% end %>
 
       <div class="table d-none" data-tabs-target="content" data-tab="2">
         <%= render 'table' %>
       </div>
       <div class="transfers d-none d-flex justify-content-center" data-tabs-target="content" data-tab="3">
-        <%= render 'transfers', transfers: @transfers, gameweek: @current_gameweek %>
+        <%= render 'transfers', transfers: @transfers, gameweek: @current_gw %>
       </div>
     </div>
   </div>
 
   <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
-    <%= render 'right_column_content', penalties: @penalties, illegal_players: @illegal_players, penalty_players: @penalty_players, gameweek: @next_gameweek %>
-
+    <%= render 'right_column_content', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, last_week_illegal_players: @last_week_illegal_players, next_gw: @next_gw, current_gw: @current_gw, screenshot_changes: @screenshot_changes %>
     <% if current_user && current_user.admin? %>
       <%= render 'admin_button' %>
     <% end %>

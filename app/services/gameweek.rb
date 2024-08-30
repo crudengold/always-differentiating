@@ -39,11 +39,8 @@ class Gameweek
       last_week = team.picks_for_last_week(@gw_num)
       this_week = team.picks_for_this_week(@gw_num)
 
-      last_week_player_ids = last_week.map { |player| player["id"] }
-      this_week_player_ids = this_week.map { |player| player["id"] }
-
-      transfers[team.entry_name][:out] = last_week_player_ids - this_week_player_ids
-      transfers[team.entry_name][:in] = this_week_player_ids - last_week_player_ids
+      transfers[team.entry_name][:out] = last_week - this_week
+      transfers[team.entry_name][:in] = this_week - last_week
     end
     transfers
   end

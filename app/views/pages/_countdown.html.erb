@@ -4,7 +4,7 @@
 
 <div id="countdown" style="text-align: center">
   <script>
-    var targetDate = new Date("<%= @deadline_minus_one %>");
+    var targetDate = new Date("<%= @next_deadline_minus_one %>");
     var countdownElement = document.getElementById("countdown");
 
     function updateCountdown() {
