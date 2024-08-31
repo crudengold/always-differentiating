@@ -25,9 +25,9 @@ class PagesController < ApplicationController
   end
 
   def transfers
-    all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
-    @current_gameweek = Gameweek.new(all_data, "current").gw_num
-    @transfers = Gameweek.new(all_data, "current").transfers
+    # all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
+    @current_gameweek = Gameweek.new("current").gw_num
+    @transfers = Gameweek.new("current").transfers
   end
 
   def admin

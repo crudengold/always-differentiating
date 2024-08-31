@@ -1,12 +1,15 @@
 require "open-uri"
 require_relative "../services/api_json.rb"
 require_relative "../services/gameweek.rb"
+require_relative "../helpers/json_helper.rb"
 
 class GetCurrentPicksJob < ApplicationJob
   queue_as :default
+  include JsonHelper
 
   def perform(*args)
-    # all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
+    all_data = ApiJson.new("https://fantasy.premierleague.com/api/bootstrap-static/").get
+    save_to_file(all_data)
 
     gameweek = Gameweek.new("current").gw_num
     next_gameweek = Gameweek.new("next")
