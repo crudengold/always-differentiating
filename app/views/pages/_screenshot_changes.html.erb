@@ -3,12 +3,10 @@
   <div class="column" style="text-align: center" id="no-warnings">
     <h5>Newly over 15%:</h5>
     <div class="grid-container">
-      <% screenshot_changes[:now_illegal].each do |player| %>
-        <% if player.past_ownership_stats[gameweek.to_s] >= 15 %>
-          <div class="grid-item">
-            <%= render PlayerComponent.new(player:, gameweek:) %>
-          </div>
-        <% end %>
+      <% newly_fifteen_percent&.each do |player| %>
+        <div class="grid-item">
+          <%= render PlayerComponent.new(player:, gameweek:) %>
+        </div>
       <% end %>
     </div>
     <hr>
