@@ -13,6 +13,7 @@ class UpdatePenaltiesJob < ApplicationJob
 
       picks_for_gw = fplteam.picks[gameweek.to_s]
       next unless picks_for_gw
+      p "checking penalties for #{fplteam.discord_name}"
 
       picks_for_gw.each do |player_id|
         player = Player.find_by(fpl_id: player_id)
