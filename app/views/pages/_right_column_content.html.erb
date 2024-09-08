@@ -4,9 +4,9 @@
   </div>
   <div class="m-0 p-0" id="changes">
     <% if illegal_players.any? %>
-      <%= render 'screenshot_changes', screenshot_changes:, gameweek: next_gw %>
+      <%= render 'screenshot_changes', screenshot_changes:, gameweek: next_gw, newly_fifteen_percent: %>
     <% else %>
-      <%= render 'screenshot_changes', screenshot_changes:, gameweek: current_gw %>
+      <%= render 'screenshot_changes', screenshot_changes:, gameweek: current_gw, newly_fifteen_percent: %>
     <% end %>
   </div>
   <div id="test-countdown">

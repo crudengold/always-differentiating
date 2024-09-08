@@ -81,11 +81,19 @@ class PagesController < ApplicationController
     @transfers = @current_gw < 2 ? {} : @current_gw_data.transfers
   end
 
+  def newly_15_percent(gameweek, illegal_players)
+    fifteen_percenters = illegal_players.select { |player| player.over_15_percent(gameweek) }
+    new_fifteen_percenters = fifteen_percenters.select { |player| !player.over_15_percent(gameweek - 1) }
+    new_fifteen_percenters.to_a
+  end
+
   def determine_screenshot_changes
     if @illegal_players.empty?
       @screenshot_changes = screenshot_changes(@current_gw)
+      @newly_15_percent = newly_15_percent(@current_gw, @last_week_illegal_players)
     else
       @screenshot_changes = screenshot_changes(@next_gw)
+      @newly_15_percent = newly_15_percent(@next_gw, @illegal_players)
     end
   end
 end
