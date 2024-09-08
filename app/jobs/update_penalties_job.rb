@@ -9,9 +9,11 @@ class UpdatePenaltiesJob < ApplicationJob
     gameweek = Gameweek.new("current").gw_num
 
     Fplteam.find_each do |fplteam|
-      picks_for_gw = fplteam.picks[gameweek.to_s]
+      next if fplteam.free_hit?(gameweek)
 
+      picks_for_gw = fplteam.picks[gameweek.to_s]
       next unless picks_for_gw
+      p "checking penalties for #{fplteam.discord_name}"
 
       picks_for_gw.each do |player_id|
         player = Player.find_by(fpl_id: player_id)

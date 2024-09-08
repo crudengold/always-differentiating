@@ -10,10 +10,10 @@ class Penalty < ApplicationRecord
   POINTS_DEDUCTED = 4
 
   def self.create_or_update_penalty(pick, gameweek, team)
+    create_penalty(pick, gameweek, team)
+
     next_gameweek = Gameweek.new("next")
     next_deadline = next_gameweek.deadline - 1.day
-
-    create_penalty(pick, gameweek, team)
     schedule_update_job(next_gameweek, next_deadline)
   end
 
