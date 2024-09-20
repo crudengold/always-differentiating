@@ -19,7 +19,7 @@
   </div>
 
   <div class="column col-xs-12 col-sm-4 p-0" id="right-column">
-    <%= render 'right_column_content', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, last_week_illegal_players: @last_week_illegal_players, next_gw: @next_gw, current_gw: @current_gw, screenshot_changes: @screenshot_changes, newly_fifteen_percent: @newly_fifteen_percent %>
+    <%= render 'right_column_content', penalties: @latest_confirmed_penalties, illegal_players: @illegal_players, last_week_illegal_players: @last_week_illegal_players, next_gw: @next_gw, current_gw: @current_gw, screenshot_changes: @screenshot_changes, newly_fifteen_percent: @newly_15_percent %>
     <% if current_user && current_user.admin? %>
       <%= render 'admin_button' %>
     <% end %>

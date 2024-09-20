@@ -4,6 +4,7 @@
     <h5>Newly over 15%:</h5>
     <div class="grid-container">
       <% newly_fifteen_percent&.each do |player| %>
+        <% player = player[0] %>
         <div class="grid-item">
           <%= render PlayerComponent.new(player:, gameweek:) %>
         </div>
