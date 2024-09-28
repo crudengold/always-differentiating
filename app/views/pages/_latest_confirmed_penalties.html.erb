@@ -11,7 +11,7 @@
         <div class="confirmed-penalty-card">
           <h5><strong><%= penalty.fplteam.entry_name %></strong> (<%= penalty.fplteam.discord_name %>)</p>
           <p>Gameweek <%= penalty.gameweek %></p>
-          <h6><strong><%= penalty.player.web_name %> (<%= penalty.player.past_ownership_stats[gameweek.to_s] %>%)</strong></h6>
+          <h6><strong><%= penalty.player.web_name %> (<%= penalty.player.past_ownership_stats[penalty.gameweek.to_s] %>%)</strong></h6>
           <p style="margin: 0px"><%= penalty.points_deducted %> points deducted</p>
         </div>
       <% end %>

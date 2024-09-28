@@ -1,7 +1,8 @@
 <div class="m-2" style="text-align: center">
   <h4><strong>Movers and shakers:</strong></h4>
   <div class="column" style="text-align: center" id="no-warnings">
-    <h5>Newly over 15%:</h5>
+    <h6><strong>Newly over 15%:</strong></h6>
+    <p style="font-size: 12px">(must be sold by the deadline if currently owned)</p>
     <div class="grid-container">
       <% newly_fifteen_percent&.each do |player| %>
         <% player = player[0] %>
@@ -11,7 +12,8 @@
       <% end %>
     </div>
     <hr>
-    <h5>New on the screenshot:</h5>
+    <h6><strong>New on the screenshot:</strong></h6>
+    <p style="font-size: 12px">(illegal to buy, but not necessary to sell yet)</p>
     <div class="grid-container">
       <% screenshot_changes[:now_illegal].each do |player| %>
         <% if player.past_ownership_stats[gameweek.to_s] < 15 %>
@@ -22,7 +24,8 @@
       <% end %>
     </div>
     <hr>
-    <h5>No longer on the screenshot:</h5>
+    <h6><strong>No longer on the screenshot:</h6>
+    <p style="font-size: 12px">(now legal to buy)</strong></p>
     <div class="grid-container">
       <% screenshot_changes[:now_legal].each do |player| %>
         <div class="grid-item">

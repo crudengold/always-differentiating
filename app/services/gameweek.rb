@@ -4,7 +4,7 @@ require 'json'
 class Gameweek
   attr_reader :gw_num, :deadline
   def initialize(api_data = nil, time_relative)
-    @all_gameweeks = api_data ? api_data["events"] : load_json_data
+    @all_gameweeks = api_data ? api_data["events"] : retrieve_cached_data
     @time_relative = time_relative
     @gw_num = get_number
     @deadline = get_deadline
@@ -47,9 +47,8 @@ class Gameweek
 
   private
 
-  def load_json_data
-    file_path = Rails.root.join('lib', 'assets', 'data', 'events.json')
-    JSON.parse(File.read(file_path))["events"]
+  def retrieve_cached_data
+    Rails.cache.read("fpl_data")["events"]
   end
 
   def find_gameweek_id
