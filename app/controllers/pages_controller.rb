@@ -10,11 +10,11 @@ require_relative "../services/fetch_api_data.rb"
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :authenticate_user!, only: [:admin]
+  before_action :retrieve_cached_data
   before_action :set_gameweek_data, only: [:home]
   before_action :set_penalties, only: [:home]
   before_action :set_transfers, only: [:home]
   before_action :determine_screenshot_changes, only: [:home]
-  before_action :retrieve_cached_data
 
   def home
     @update_time = (Player.last.updated_at).in_time_zone("London")
