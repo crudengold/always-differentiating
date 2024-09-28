@@ -4,6 +4,7 @@ require "date"
 require "time"
 require_relative "../services/api_json.rb"
 require_relative "../services/gameweek.rb"
+require_relative "../services/fetch_api_data.rb"
 
 
 class PagesController < ApplicationController
@@ -13,6 +14,7 @@ class PagesController < ApplicationController
   before_action :set_penalties, only: [:home]
   before_action :set_transfers, only: [:home]
   before_action :determine_screenshot_changes, only: [:home]
+  before_action :retrieve_cached_data
 
   def home
     @update_time = (Player.last.updated_at).in_time_zone("London")
@@ -45,6 +47,13 @@ class PagesController < ApplicationController
   end
 
   private
+
+  def retrieve_cached_data
+    url = "https://fantasy.premierleague.com/api/bootstrap-static/"
+    fetch_api_data = FetchApiData.new(url)
+    fetch_api_data.call
+    @fpl_data = fetch_api_data.retrieve_cached_data
+  end
 
   def set_gameweek_data
     @current_gw_data = Gameweek.new("current")

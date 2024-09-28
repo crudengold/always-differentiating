@@ -4,6 +4,7 @@ module JsonHelper
   def save_to_file(data)
     File.open("lib/assets/data/events.json", "w") do |f|
       f.write(JSON.pretty_generate(data))
+      'Data saved to file'
     end
   end
 end
