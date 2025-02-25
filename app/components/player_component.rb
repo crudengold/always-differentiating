@@ -10,9 +10,9 @@ class PlayerComponent < ViewComponent::Base
 
   def shirt_image
     if @player&.element_type == 1
-      "#{@player.shirt}_gk.png"
+      "#{@player&.shirt}_gk.png"
     else
-      "#{@player.shirt}.png"
+      "#{@player&.shirt}.png"
     end
   end
 end
