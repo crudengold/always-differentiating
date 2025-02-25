@@ -5,14 +5,14 @@ class PlayerComponent < ViewComponent::Base
   def initialize(player:, gameweek:)
     @player = player
     @gameweek = gameweek
-    @shirt = shirt_image
+    @shirt = shirt_image if @player
   end
 
   def shirt_image
-    if @player&.element_type == 1
-      "#{@player&.shirt}_gk.png"
+    if @player.element_type == 1
+      "#{@player.shirt}_gk.png"
     else
-      "#{@player&.shirt}.png"
+      "#{@player.shirt}.png"
     end
   end
 end
