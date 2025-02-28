@@ -15,14 +15,14 @@
           <h5 style="text-align:center">Out</h5>
           <% count.times do |i| %>
             <% player = Player.find_by(fpl_id: value[:out][i - 1]) %>
-            <%= render PlayerComponent.new(player: player, gameweek: gameweek)  %>
+            <%= render PlayerComponent.new(player: player, gameweek: gameweek) if player.present? %>
           <% end %>
         </div>
         <div class="transfers-in col-5">
           <h5 style="text-align:center">In</h5>
           <% count.times do |i| %>
             <% player = Player.find_by(fpl_id: value[:in][i - 1]) %>
-            <%= render PlayerComponent.new(player: player, gameweek: gameweek)  %>
+            <%= render PlayerComponent.new(player: player, gameweek: gameweek) if player.present?  %>
           <% end %>
         </div>
       </div>
