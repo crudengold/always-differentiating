@@ -14,10 +14,14 @@ class Player < ApplicationRecord
   end
 
   def over_15_percent(gameweek)
+    return false if ownership_for_gameweek(gameweek).nil?
+
     ownership_for_gameweek(gameweek) >= 15
   end
 
   def ten_to_fifteen_percent(gameweek)
+    return false if ownership_for_gameweek(gameweek).nil?
+
     ownership_for_gameweek(gameweek) >= 10 && ownership_for_gameweek(gameweek) < 15
   end
 
