@@ -91,8 +91,8 @@ class PagesController < ApplicationController
   end
 
   def newly_15_percent(gameweek, illegal_players)
-    fifteen_percenters = illegal_players.select { |player| player.over_15_percent(gameweek) }
-    new_fifteen_percenters = fifteen_percenters.select { |player| !player.over_15_percent(gameweek - 1) }
+    fifteen_percenters = illegal_players.select { |player| player&.over_15_percent(gameweek) }
+    new_fifteen_percenters = fifteen_percenters.select { |player| !player&.over_15_percent(gameweek - 1) }
     new_fifteen_percenters.to_a
   end
 
