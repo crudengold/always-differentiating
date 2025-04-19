@@ -3,7 +3,7 @@ require_relative "../services/api_json.rb"
 class Fplteam < ApplicationRecord
   has_many :players, through: :picks
   # has_many :picks
-  has_many :penalties
+  has_many :penalties, dependent: :destroy
 
   def picks_for_last_week(current_gw)
     last_week_key = (current_gw - (free_hit?(current_gw - 1) ? 2 : 1)).to_s

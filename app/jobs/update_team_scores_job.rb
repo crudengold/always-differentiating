@@ -13,14 +13,14 @@ class UpdateTeamScoresJob < ApplicationJob
   def update_penalties(teams)
     teams.each do |team|
       fplteam = Fplteam.find_by(entry: team["entry"])
-      fplteam.update_penalties
+      fplteam.update_penalties if fplteam
     end
   end
 
   def update_scores(teams)
     teams.each do |team|
       fplteam = Fplteam.find_by(entry: team["entry"])
-      fplteam.update_scores(team["total"])
+      fplteam.update_scores(team["total"]) if fplteam
     end
   end
 end
