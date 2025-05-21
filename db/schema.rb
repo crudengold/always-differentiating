@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_19_165438) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_21_123746) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -102,7 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_165438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "shirt"
-    t.json "past_ownership_stats", default: {}
+    t.text "past_ownership_stats"
   end
 
   create_table "selected_by_stats", force: :cascade do |t|
