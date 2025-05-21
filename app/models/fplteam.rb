@@ -54,4 +54,18 @@ class Fplteam < ApplicationRecord
     self.save
   end
 
+  def average_ownership_for_gameweek(gameweek)
+    total = self.picks_for_this_week(gameweek).sum do |player_id|
+      player = Player.find_by(fpl_id: player_id)
+      player.element_type == 5 ? 0 : player.past_ownership_stats[gameweek.to_s]
+    end
+    (total / 15).round(2)
+  end
+
+  def total_average_ownership
+    total = self.picks.keys.map do |gameweek|
+      self.average_ownership_for_gameweek(gameweek)
+    end.sum
+    (total / self.picks.keys.count).round(2)
+  end
 end
