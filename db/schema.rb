@@ -66,6 +66,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_165438) do
     t.jsonb "picks", default: {}, null: false
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "painting_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["painting_id"], name: "index_order_items_on_painting_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "paintings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "penalties", force: :cascade do |t|
     t.integer "points_deducted"
     t.bigint "fplteam_id", null: false
@@ -102,7 +121,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_165438) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "shirt"
-    t.json "past_ownership_stats", default: {}
+    t.text "past_ownership_stats"
   end
 
   create_table "selected_by_stats", force: :cascade do |t|
@@ -129,6 +148,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_165438) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "order_items", "orders", on_delete: :cascade
+  add_foreign_key "order_items", "paintings"
   add_foreign_key "penalties", "fplteams"
   add_foreign_key "penalties", "players"
   add_foreign_key "picks", "fplteams"
