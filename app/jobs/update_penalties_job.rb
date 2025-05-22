@@ -17,9 +17,9 @@ class UpdatePenaltiesJob < ApplicationJob
 
       picks_for_gw.each do |player_id|
         player = Player.find_by(fpl_id: player_id)
-        if player.over_15_percent(gameweek)
+        if player.over_15_percent(gameweek) && !player.is_manager?
           Penalty.create_or_update_penalty(player, gameweek, fplteam)
-        elsif player.ten_to_fifteen_percent(gameweek) && player.is_new_pick(fplteam, gameweek)
+        elsif player.ten_to_fifteen_percent(gameweek) && player.is_new_pick(fplteam, gameweek) && !player.is_manager?
           Penalty.create_or_update_penalty(player, gameweek, fplteam)
         end
       end

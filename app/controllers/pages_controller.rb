@@ -81,8 +81,8 @@ class PagesController < ApplicationController
   def screenshot_changes(gameweek)
     next_week_illegal_players = Player.with_ownership_above(gameweek, 10)
     current_week_illegal_players = Player.with_ownership_above((gameweek - 1), 10)
-    now_illegal = next_week_illegal_players - current_week_illegal_players
-    now_legal = current_week_illegal_players - next_week_illegal_players
+    now_illegal = next_week_illegal_players - current_week_illegal_players - Player.managers
+    now_legal = current_week_illegal_players - next_week_illegal_players - Player.managers
     {now_illegal: now_illegal, now_legal: now_legal}
   end
 
@@ -91,7 +91,7 @@ class PagesController < ApplicationController
   end
 
   def newly_15_percent(gameweek, illegal_players)
-    fifteen_percenters = illegal_players.select { |player| player&.over_15_percent(gameweek) }
+    fifteen_percenters = illegal_players.select { |player| player&.over_15_percent(gameweek) && !player.is_manager? }
     new_fifteen_percenters = fifteen_percenters.select { |player| !player&.over_15_percent(gameweek - 1) }
     new_fifteen_percenters.to_a
   end

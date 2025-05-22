@@ -9,6 +9,10 @@ class Player < ApplicationRecord
     where("past_ownership_stats::jsonb ->> ? IS NOT NULL AND (past_ownership_stats::jsonb ->> ?)::float >= ?", gameweek.to_s, gameweek.to_s, threshold)
   }
 
+  scope :managers, -> {
+    where(element_type: 5)
+  }
+
   def ownership_for_gameweek(gameweek)
     past_ownership_stats[gameweek.to_s]
   end
@@ -37,6 +41,10 @@ class Player < ApplicationRecord
 
   def is_new_pick(fplteam, gameweek)
     is_in_team(fplteam, gameweek) && !was_in_team_last_week(fplteam, gameweek)
+  end
+
+  def is_manager?
+    self.element_type == 5
   end
 
   def self.create_or_update_player(player, gameweek)
